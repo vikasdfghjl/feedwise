@@ -1,0 +1,17 @@
+# Backend specific
+backend/dist/
+backend/node_modules/
+backend/build/
+backend/.env
+backend/package-lock.json
+
+# Frontend specific
+frontend/dist/
+frontend/node_modules/
+frontend/build/
+frontend/.vite/
+frontend/coverage/
+frontend/package-lock.json
+
+# Bun
+frontend/bun.lockb
