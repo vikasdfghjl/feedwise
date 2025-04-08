@@ -4,18 +4,27 @@ import { ArticleCard } from './ArticleCard';
 import { Button } from '@/components/ui/button';
 import { TimeFilterOption } from '@/context/FeedContext';
 import { Calendar } from 'lucide-react';
+import { ViewType } from '@/pages/Dashboard';
 
-export const ArticleList: React.FC = () => {
+interface ArticleListProps {
+  viewType: ViewType;
+}
+
+export const ArticleList: React.FC<ArticleListProps> = ({ viewType }) => {
   const { 
     filteredArticles, 
     selectedFeed, 
     selectedTag, 
     searchQuery,
     timeFilter,
-    setTimeFilter
+    setTimeFilter,
+    isSavedView
   } = useFeed();
 
   const getTitle = () => {
+    if (isSavedView) {
+      return 'Saved Articles';
+    }
     if (searchQuery) {
       return `Search results for "${searchQuery}"`;
     }
@@ -30,6 +39,89 @@ export const ArticleList: React.FC = () => {
 
   const handleTimeFilterChange = (filter: TimeFilterOption) => {
     setTimeFilter(filter);
+  };
+
+  // Render articles based on view type
+  const renderArticles = () => {
+    if (filteredArticles.length === 0) {
+      return (
+        <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
+          <h2 className="text-xl font-semibold mb-2">No articles found</h2>
+          <p className="text-muted-foreground mb-4">
+            {isSavedView
+              ? "You haven't saved any articles yet. Click the bookmark icon on articles to save them."
+              : searchQuery
+              ? "Try adjusting your search query"
+              : selectedFeed
+              ? "This feed doesn't have any articles yet"
+              : selectedTag
+              ? "No articles with this tag"
+              : timeFilter !== 'all'
+              ? `No articles in the selected time period`
+              : "Start by adding some RSS feeds"}
+          </p>
+        </div>
+      );
+    }
+
+    switch (viewType) {
+      case 'card':
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredArticles.map((article) => (
+              <ArticleCard key={article._id} article={article} />
+            ))}
+          </div>
+        );
+
+      case 'list':
+        return (
+          <div className="flex flex-col space-y-4">
+            {filteredArticles.map((article) => (
+              <div key={article._id} className="flex flex-col p-4 border rounded-lg hover:shadow-md transition-shadow">
+                <a href={article.url} target="_blank" rel="noopener noreferrer" className="flex flex-col">
+                  {article.imageUrl && (
+                    <div className="mb-4 h-[200px]">
+                      <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover rounded-md" />
+                    </div>
+                  )}
+                  <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
+                  <p className="text-muted-foreground text-sm mb-2">
+                    {new Date(article.publishDate).toLocaleDateString()} • {article.feedTitle}
+                  </p>
+                  <p className="line-clamp-3 text-gray-600">{article.description}</p>
+                </a>
+              </div>
+            ))}
+          </div>
+        );
+
+      case 'compact':
+        return (
+          <div className="flex flex-col space-y-2">
+            {filteredArticles.map((article) => (
+              <div key={article._id} className="flex items-center p-2 border rounded-md hover:bg-gray-50 transition-colors">
+                <a href={article.url} target="_blank" rel="noopener noreferrer" className="flex items-center w-full">
+                  {article.imageUrl && (
+                    <div className="mr-4 h-12 w-12 flex-shrink-0">
+                      <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover rounded-md" />
+                    </div>
+                  )}
+                  <div className="flex-grow min-w-0">
+                    <h3 className="font-medium text-sm truncate">{article.title}</h3>
+                    <p className="text-xs text-muted-foreground">
+                      {new Date(article.publishDate).toLocaleDateString()} • {article.feedTitle}
+                    </p>
+                  </div>
+                </a>
+              </div>
+            ))}
+          </div>
+        );
+
+      default:
+        return null;
+    }
   };
 
   return (
@@ -75,28 +167,7 @@ export const ArticleList: React.FC = () => {
         </div>
       </div>
 
-      {filteredArticles.length === 0 ? (
-        <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
-          <h2 className="text-xl font-semibold mb-2">No articles found</h2>
-          <p className="text-muted-foreground mb-4">
-            {searchQuery
-              ? "Try adjusting your search query"
-              : selectedFeed
-              ? "This feed doesn't have any articles yet"
-              : selectedTag
-              ? "No articles with this tag"
-              : timeFilter !== 'all'
-              ? `No articles in the selected time period`
-              : "Start by adding some RSS feeds"}
-          </p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredArticles.map((article) => (
-            <ArticleCard key={article._id} article={article} />
-          ))}
-        </div>
-      )}
+      {renderArticles()}
     </div>
   );
 };

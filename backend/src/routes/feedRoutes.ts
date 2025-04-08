@@ -7,6 +7,7 @@ import {
   updateFeed,
   deleteFeed,
   refreshFeed,
+  checkNewFeedContent,
 } from '../controllers/feedController';
 
 const router = express.Router();
@@ -23,5 +24,8 @@ router.route('/:id')
 
 // Special route for refreshing feed
 router.post('/:id/refresh', protect, refreshFeed);
+
+// Route to check if a feed has new content
+router.get('/:id/check-new-content', protect, checkNewFeedContent);
 
 export default router;

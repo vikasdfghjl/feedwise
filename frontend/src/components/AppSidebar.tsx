@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Plus, Rss, Tag, Bookmark, Settings, Search, ChevronLeft, ChevronRight, RefreshCw } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Plus, Rss, Tag, Bookmark, Settings, Search, ChevronLeft, ChevronRight, RefreshCw, BellRing } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useFeed } from '@/hooks/useFeed';
+import * as api from '@/services/api';
 import { 
   Sidebar, 
   SidebarContent, 
@@ -18,6 +19,25 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Input } from '@/components/ui/input';
 import { AddFeedDialog } from './AddFeedDialog';
 import { TagManagement } from './TagManagement';
+import { SettingsDialog } from './SettingsDialog';
+import { Feed } from '@/types';
+
+// Create a component for the new content notification button
+const NewContentNotification = ({ feed, onFetch }: { feed: Feed, onFetch: (id: string, e: React.MouseEvent) => Promise<void> }) => {
+  if (!feed.hasNewContent) return null;
+  
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      className="absolute right-2 -top-2 bg-background text-primary border-primary animate-pulse hover:animate-none flex items-center gap-1 py-0 h-6 px-2 text-xs z-10"
+      onClick={(e) => onFetch(feed._id, e)}
+    >
+      <BellRing className="h-3 w-3" />
+      Click to fetch new feed
+    </Button>
+  );
+};
 
 export const AppSidebar = () => {
   const { 
@@ -30,12 +50,20 @@ export const AppSidebar = () => {
     searchQuery,
     setSearchQuery,
     refreshFeed,
-    loading
+    loading,
+    checkForNewContent,
+    clearNewContentFlag,
+    isSavedView,
+    handleSavedArticles
   } = useFeed();
   const { state, toggleSidebar } = useSidebar();
   const [showAddFeed, setShowAddFeed] = useState(false);
   const [showTagManagement, setShowTagManagement] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [filterText, setFilterText] = useState('');
+  
+  // Check if we're currently viewing saved articles
+  const isViewingSaved = isSavedView;
 
   const filteredFeeds = feeds.filter(feed => 
     feed.title.toLowerCase().includes(filterText.toLowerCase())
@@ -45,15 +73,51 @@ export const AppSidebar = () => {
     tag.name.toLowerCase().includes(filterText.toLowerCase())
   );
 
+  // Periodically check feeds for new content
+  useEffect(() => {
+    // Helper function to check if we should check for new content
+    const shouldCheckFeed = (feedId: string): boolean => {
+      const lastCheckedStr = localStorage.getItem(`feed_${feedId}_last_checked`);
+      if (!lastCheckedStr) return true;
+      
+      const lastChecked = parseInt(lastCheckedStr, 10);
+      const oneHourAgo = Date.now() - (60 * 60 * 1000); // 1 hour in milliseconds
+      
+      return lastChecked < oneHourAgo;
+    };
+    
+    // Update the last checked timestamp in localStorage
+    const updateLastChecked = (feedId: string) => {
+      localStorage.setItem(`feed_${feedId}_last_checked`, Date.now().toString());
+    };
+    
+    // Check for new content every hour, but only perform the check if an hour has passed
+    // since the last check for each individual feed
+    const checkNewContentInterval = setInterval(() => {
+      feeds.forEach(feed => {
+        if (shouldCheckFeed(feed._id)) {
+          checkForNewContent(feed._id);
+          updateLastChecked(feed._id);
+        }
+      });
+    }, 60 * 60 * 1000); // 1 hour
+    
+    // Run an initial check for feeds that haven't been checked in the last hour
+    feeds.forEach(feed => {
+      if (shouldCheckFeed(feed._id)) {
+        checkForNewContent(feed._id);
+        updateLastChecked(feed._id);
+      }
+    });
+    
+    return () => {
+      clearInterval(checkNewContentInterval);
+    };
+  }, [feeds, checkForNewContent]);
+
   const handleRefreshFeed = async (feedId: string, e: React.MouseEvent) => {
     e.stopPropagation();
     await refreshFeed(feedId);
-  };
-
-  const handleSavedArticles = () => {
-    selectFeed(null);
-    selectTag(null);
-    setSearchQuery('saved:true');
   };
 
   return (
@@ -145,6 +209,7 @@ export const AppSidebar = () => {
                     >
                       <RefreshCw className="h-3 w-3" />
                     </Button>
+                    <NewContentNotification feed={feed} onFetch={handleRefreshFeed} />
                   </div>
                 ))}
               </SidebarGroupContent>
@@ -188,10 +253,11 @@ export const AppSidebar = () => {
         <SidebarFooter className="border-t p-4">
           <div className="flex justify-around">
             <Button 
-              variant="ghost" 
+              variant={isSavedView ? "secondary" : "ghost"}
               size="icon" 
               title="Saved Articles" 
               onClick={handleSavedArticles}
+              className={isSavedView ? "bg-primary/10 text-primary" : ""}
             >
               <Bookmark className="h-5 w-5" />
             </Button>
@@ -203,7 +269,12 @@ export const AppSidebar = () => {
             >
               <Tag className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon" title="Settings">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              title="Settings"
+              onClick={() => setShowSettings(true)}
+            >
               <Settings className="h-5 w-5" />
             </Button>
           </div>
@@ -227,6 +298,7 @@ export const AppSidebar = () => {
       
       <AddFeedDialog open={showAddFeed} onOpenChange={setShowAddFeed} />
       <TagManagement open={showTagManagement} onOpenChange={setShowTagManagement} />
+      <SettingsDialog open={showSettings} onOpenChange={setShowSettings} />
     </>
   );
 };

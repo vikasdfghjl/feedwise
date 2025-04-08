@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FeedContext, FeedContextType } from './FeedContext';
+import { FeedContext, FeedContextType, TimeFilterOption } from './FeedContext';
 import { Article, Feed, Tag, Category } from '../types';
 import { toast } from '../components/ui/use-toast';
 import * as api from '../services/api';
@@ -10,6 +10,8 @@ interface ArticleParams {
   page: number;
   feedId?: string;
   tag?: string;
+  isSaved?: boolean;
+  source?: string;
 }
 
 // Define error type
@@ -33,6 +35,8 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [selectedFeed, setSelectedFeed] = useState<Feed | null>(null);
   const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [timeFilter, setTimeFilter] = useState<TimeFilterOption>('all');
+  const [isSavedView, setIsSavedView] = useState<boolean>(false);
   
   // Fetch initial data
   useEffect(() => {
@@ -110,13 +114,29 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [tags, articles]);
   
-  // Fetch articles when selectedFeed or selectedTag changes
+  // Fetch articles when selectedFeed, selectedTag, or searchQuery changes
   useEffect(() => {
     const fetchFilteredArticles = async () => {
       try {
         setLoading(true);
         
-        // Build filter params
+        // Special handling for saved:true search query - use dedicated endpoint
+        if (searchQuery.toLowerCase().trim() === 'saved:true') {
+          // Use the dedicated endpoint for saved articles
+          const params = { 
+            limit: 50, 
+            page: 1,
+            ...(selectedFeed ? { feedId: selectedFeed._id } : {}),
+            ...(selectedTag ? { tag: selectedTag.name } : {})
+          };
+          
+          const response = await api.getSavedArticles(params);
+          setArticles(response.data.articles);
+          setLoading(false);
+          return;
+        }
+        
+        // Build filter params for regular articles
         const params: ArticleParams = { limit: 50, page: 1 };
         if (selectedFeed) params.feedId = selectedFeed._id;
         if (selectedTag) params.tag = selectedTag.name;
@@ -134,7 +154,7 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
     
     fetchFilteredArticles();
-  }, [selectedFeed, selectedTag]);
+  }, [selectedFeed, selectedTag, searchQuery]);
   
   // Compute filtered articles based on selected feed, tag, search query
   const filteredArticles = React.useMemo(() => {
@@ -143,8 +163,8 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // We don't need to filter by selectedFeed or selectedTag anymore
     // since we're fetching filtered articles from the API
     
-    // Filter by search query
-    if (searchQuery) {
+    // Filter by search query (if it's not the special saved:true query)
+    if (searchQuery && searchQuery.toLowerCase().trim() !== 'saved:true') {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(article => 
         article.title.toLowerCase().includes(query) || 
@@ -184,6 +204,9 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
         title: "Feed added",
         description: `${response.data.title} has been added to your feeds`,
       });
+      
+      // Return the new feed
+      return response.data;
     } catch (err: unknown) {
       const error = err as ApiError;
       setLoading(false);
@@ -193,6 +216,7 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: error.response?.data?.message || "Failed to add feed",
         variant: "destructive",
       });
+      throw error;
     }
   };
 
@@ -232,11 +256,27 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const selectFeed = (feed: Feed | null) => {
     setSelectedFeed(feed);
     setSelectedTag(null); // Clear tag selection when selecting a feed
+    
+    // Clear saved view flag
+    setIsSavedView(false);
+    
+    // Clear search query if it exists
+    if (searchQuery) {
+      setSearchQuery('');
+    }
   };
 
   const selectTag = (tag: Tag | null) => {
     setSelectedTag(tag);
     setSelectedFeed(null); // Clear feed selection when selecting a tag
+    
+    // Clear saved view flag
+    setIsSavedView(false);
+    
+    // Clear search query if it exists
+    if (searchQuery) {
+      setSearchQuery('');
+    }
   };
 
   const markAsRead = async (articleId: string) => {
@@ -276,9 +316,14 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const toggleSaved = async (articleId: string) => {
     try {
-      await api.toggleSavedArticle(articleId);
+      // Find the article in state
+      const article = articles.find(a => a._id === articleId);
+      if (!article) return;
       
-      // Toggle saved status in state
+      // Store the current saved state before toggling
+      const wasArticleSaved = article.isSaved;
+      
+      // Optimistically update UI first
       setArticles(prev => 
         prev.map(article => 
           article._id === articleId 
@@ -287,17 +332,40 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
         )
       );
       
-      const article = articles.find(a => a._id === articleId);
+      // Make API call
+      const response = await api.toggleSavedArticle(articleId);
       
       toast({
-        title: article?.isSaved ? "Article removed from saved" : "Article saved",
-        description: article?.isSaved 
+        title: wasArticleSaved ? "Article removed from saved" : "Article saved",
+        description: wasArticleSaved 
           ? "The article has been removed from your saved items" 
           : "The article has been added to your saved items",
       });
+      
+      // If we're currently viewing saved articles and the article was unsaved,
+      // we need to refresh the list
+      if (searchQuery.toLowerCase().trim() === 'saved:true' && wasArticleSaved) {
+        // Small delay to allow the animation to complete
+        setTimeout(() => {
+          const params: ArticleParams = { limit: 50, page: 1, isSaved: true };
+          api.getArticles(params).then(response => {
+            setArticles(response.data.articles);
+          });
+        }, 300);
+      }
     } catch (err: unknown) {
       const error = err as ApiError;
       console.error('Error toggling saved status:', err);
+      
+      // Revert optimistic update in case of error
+      setArticles(prev => 
+        prev.map(article => 
+          article._id === articleId 
+            ? { ...article, isSaved: !article.isSaved } 
+            : article
+        )
+      );
+      
       toast({
         title: "Error",
         description: error.response?.data?.message || "Failed to update saved status",
@@ -407,6 +475,59 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const checkForNewContent = async (id: string) => {
+    try {
+      const response = await api.checkFeedForNewContent(id);
+      if (response.data.hasNewContent) {
+        // Update feed in state to show it has new content
+        setFeeds(prev => 
+          prev.map(feed => 
+            feed._id === id 
+              ? { ...feed, hasNewContent: true }
+              : feed
+          )
+        );
+      }
+      return response.data;
+    } catch (err: unknown) {
+      const error = err as ApiError;
+      console.error('Error checking for new content:', error);
+      throw error;
+    }
+  };
+
+  const clearNewContentFlag = (id: string) => {
+    setFeeds(prev => 
+      prev.map(feed => 
+        feed._id === id 
+          ? { ...feed, hasNewContent: false }
+          : feed
+      )
+    );
+  };
+
+  const handleSavedArticles = () => {
+    selectFeed(null);
+    selectTag(null);
+    
+    // Instead of using a special search query, we should directly call the saved articles API
+    const fetchSavedArticles = async () => {
+      try {
+        setLoading(true);
+        const response = await api.getSavedArticles({ limit: 50, page: 1 });
+        setArticles(response.data.articles);
+        // Set a flag to indicate we're viewing saved articles
+        setIsSavedView(true);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching saved articles:', err);
+        setLoading(false);
+      }
+    };
+    
+    fetchSavedArticles();
+  };
+
   return (
     <FeedContext.Provider
       value={{
@@ -418,19 +539,25 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
         selectedFeed,
         selectedTag,
         searchQuery,
+        timeFilter,
         loading,
         error,
+        isSavedView,
         addFeed,
         removeFeed,
         selectFeed,
         selectTag,
         setSearchQuery,
+        setTimeFilter,
         markAsRead,
         toggleSaved,
         addTag,
         removeTag,
         getFeedById,
-        refreshFeed
+        refreshFeed,
+        checkForNewContent,
+        clearNewContentFlag,
+        handleSavedArticles
       }}
     >
       {children}

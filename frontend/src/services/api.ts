@@ -89,6 +89,9 @@ export const deleteFeed = (id: string) =>
 export const refreshFeed = (id: string) => 
   api.post(`/feeds/${id}/refresh`);
 
+export const checkFeedForNewContent = (id: string) =>
+  api.get(`/feeds/${id}/check-new-content`);
+
 // ===== Articles API =====
 export const getArticles = (params?: { 
   page?: number, 
@@ -96,8 +99,17 @@ export const getArticles = (params?: {
   feedId?: string, 
   tag?: string, 
   isRead?: boolean, 
-  isSaved?: boolean 
+  isSaved?: boolean,
+  source?: string
 }) => api.get('/articles', { params });
+
+export const getSavedArticles = (params?: { 
+  page?: number, 
+  limit?: number, 
+  feedId?: string, 
+  tag?: string, 
+  isRead?: boolean
+}) => api.get('/articles/saved', { params });
 
 export const getArticleById = (id: string) => 
   api.get(`/articles/${id}`);

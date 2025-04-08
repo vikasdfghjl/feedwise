@@ -7,6 +7,7 @@ export interface Feed {
   tags?: string[];
   lastUpdated: string | Date;
   unreadCount: number;
+  hasNewContent?: boolean; // Added to track if feed has new content available
   userId: string;
   createdAt?: string | Date;
   updatedAt?: string | Date;

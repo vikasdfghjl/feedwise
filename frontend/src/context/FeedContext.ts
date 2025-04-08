@@ -34,6 +34,7 @@ export interface FeedContextType {
   timeFilter: TimeFilterOption; // Added time filter
   loading: boolean;
   error: string | null;
+  isSavedView: boolean; // Added flag to indicate if we're viewing saved articles
   addFeed: (feedData: { url: string, category: string, tags?: string[] }) => Promise<Feed>;
   removeFeed: (id: string) => Promise<void>;
   selectFeed: (feed: Feed | null) => void;
@@ -46,6 +47,9 @@ export interface FeedContextType {
   removeTag: (id: string) => Promise<void>;
   getFeedById: (id: string) => Feed | undefined;
   refreshFeed: (id: string) => Promise<void>;
+  checkForNewContent: (id: string) => Promise<void>; // Add method to check for new content
+  clearNewContentFlag: (id: string) => void; // Add method to clear the new content flag
+  handleSavedArticles: () => void; // Added method to handle saved articles view
 }
 
 // Export the context so it can be imported by the useFeed hook

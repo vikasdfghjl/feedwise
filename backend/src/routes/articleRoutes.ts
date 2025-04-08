@@ -7,12 +7,14 @@ import {
   markArticleAsUnread,
   toggleSavedArticle,
   updateArticleTags,
+  getSavedArticles,
 } from '../controllers/articleController';
 
 const router = express.Router();
 
 // All article routes are protected
 router.get('/', protect, getArticles);
+router.get('/saved', protect, getSavedArticles); // New endpoint for saved articles
 router.get('/:id', protect, getArticleById);
 
 // Article status routes

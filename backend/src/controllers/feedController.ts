@@ -6,7 +6,12 @@ import Parser from 'rss-parser';
 import mongoose from 'mongoose';
 
 // Create RSS parser instance
-const parser = new Parser();
+const parser = new Parser({
+  timeout: 30000, // Increased timeout for slower feeds
+  headers: {
+    'User-Agent': 'FeedWise RSS Reader/1.0 (https://feedwise.app)'
+  }
+});
 
 // Custom request type with user field
 interface AuthRequest extends Request {
@@ -392,6 +397,7 @@ export const refreshFeed = async (req: AuthRequest, res: Response): Promise<void
       // Update feed
       feed.lastUpdated = new Date();
       feed.unreadCount += newArticlesCount;
+      feed.hasNewContent = false; // Clear the hasNewContent flag after refreshing
       await feed.save();
       
       res.json({ 
@@ -404,6 +410,106 @@ export const refreshFeed = async (req: AuthRequest, res: Response): Promise<void
     }
   } catch (error) {
     console.error('Error in refreshFeed:', error);
+    res.status(500).json({
+      message: 'Server error',
+      error: process.env.NODE_ENV === 'development' ? error : undefined,
+    });
+  }
+};
+
+/**
+ * @desc    Check if a feed has new content available
+ * @route   GET /api/feeds/:id/check-new-content
+ * @access  Private
+ */
+export const checkNewFeedContent = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    if (!req.user) {
+      res.status(401).json({ message: 'Not authorized' });
+      return;
+    }
+
+    const feed = await Feed.findOne({
+      _id: req.params.id,
+      userId: req.user._id,
+    });
+    
+    if (!feed) {
+      res.status(404).json({ message: 'Feed not found' });
+      return;
+    }
+    
+    try {
+      // Fetch just the feed headers to check for updates without downloading all content
+      const response = await axios.get(feed.url, {
+        headers: {
+          'User-Agent': 'FeedWise RSS Reader/1.0 (https://feedwise.app)',
+          'If-Modified-Since': new Date(feed.lastUpdated).toUTCString()
+        },
+        validateStatus: (status) => {
+          return status === 200 || status === 304; // Accept 304 Not Modified as success
+        }
+      });
+      
+      // If server returns 304 Not Modified, there's no new content
+      if (response.status === 304) {
+        res.json({ hasNewContent: false });
+        return;
+      }
+      
+      // If we get here, we need to check if there are actually new items
+      // We only parse the feed headers and first few items to avoid heavy processing
+      const parsedFeed = await parser.parseURL(feed.url);
+      
+      let hasNewContent = false;
+      
+      // Check if the latest item is newer than our last update
+      if (parsedFeed.items && parsedFeed.items.length > 0) {
+        // Get the most recent article date from the feed
+        const mostRecentItem = parsedFeed.items[0]; // Usually feeds are sorted by date desc
+        if (mostRecentItem.pubDate) {
+          const itemDate = new Date(mostRecentItem.pubDate);
+          const feedLastUpdated = new Date(feed.lastUpdated);
+          
+          // Check if this item is newer than our last update
+          if (itemDate > feedLastUpdated) {
+            hasNewContent = true;
+          }
+        }
+        
+        // Additional check - look for any items with links we don't have yet
+        // This is useful for feeds that don't have proper date info
+        if (!hasNewContent && parsedFeed.items.length > 0) {
+          // We'll check just the first few items to keep it lightweight
+          const itemsToCheck = parsedFeed.items.slice(0, 5);
+          
+          for (const item of itemsToCheck) {
+            if (!item.link) continue;
+            
+            // Check if we already have this article
+            const existingArticle = await Article.findOne({
+              url: item.link,
+              feedId: feed._id,
+              userId: req.user._id
+            });
+            
+            if (!existingArticle) {
+              hasNewContent = true;
+              break;
+            }
+          }
+        }
+      }
+      
+      res.json({ hasNewContent });
+    } catch (error) {
+      console.error('Error checking feed for new content:', error);
+      // If there's an error checking, we'll assume there might be new content
+      // This ensures the user can try refreshing if needed
+      res.json({ hasNewContent: true });
+    }
+  } catch (error) {
+    console.error('Error in checkNewFeedContent:', error);
     res.status(500).json({
       message: 'Server error',
       error: process.env.NODE_ENV === 'development' ? error : undefined,

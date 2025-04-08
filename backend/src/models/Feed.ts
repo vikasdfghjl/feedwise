@@ -9,6 +9,7 @@ export interface IFeed extends Document {
   tags: string[];
   lastUpdated: Date;
   unreadCount: number;
+  hasNewContent: boolean; // Add field for tracking new content
   userId: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
@@ -48,6 +49,10 @@ const feedSchema = new Schema<IFeed>(
     unreadCount: {
       type: Number,
       default: 0,
+    },
+    hasNewContent: {
+      type: Boolean,
+      default: false,
     },
     userId: {
       type: Schema.Types.ObjectId,
