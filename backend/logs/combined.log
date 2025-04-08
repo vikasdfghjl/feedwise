@@ -12967,3 +12967,306 @@
 2025-04-08 15:52:21 debug: Fetching articles with filters: feedId=67f3cee5df9b8944e6c75810, tags=null, isRead=null, isSaved=null, isFromSidebar=false
 2025-04-08 15:52:21 debug: Retrieved 36 articles out of 36 total
 2025-04-08 15:52:21 http: GET /?limit=50&page=1&feedId=67f3cee5df9b8944e6c75810 304 - 16ms
+2025-04-08 16:15:37 info: Server running in development mode on port 5000
+2025-04-08 16:15:37 info: MongoDB Connected: localhost
+2025-04-08 16:16:10 http: GET /api/users/profile - Request received
+2025-04-08 16:16:10 http: GET /api/categories - Request received
+2025-04-08 16:16:10 http: GET /api/tags - Request received
+2025-04-08 16:16:10 http: GET /api/feeds - Request received
+2025-04-08 16:16:10 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:16:10 http: GET / 304 - 73ms
+2025-04-08 16:16:10 http: GET /profile 304 - 155ms
+2025-04-08 16:16:10 http: GET / 304 - 127ms
+2025-04-08 16:16:10 http: GET / 200 - 151ms
+2025-04-08 16:16:10 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:16:10 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:16:10 http: GET /?limit=50&page=1 200 - 208ms
+2025-04-08 16:16:10 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:16:10 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:16:10 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:16:10 http: GET /?limit=50&page=1 304 - 35ms
+2025-04-08 16:16:13 http: GET /api/articles?limit=50&page=1&tag=ios - Request received
+2025-04-08 16:16:13 debug: Using single tag filter: ios
+2025-04-08 16:16:13 debug: Fetching articles with filters: feedId=null, tags=ios, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:16:13 debug: Retrieved 6 articles out of 6 total
+2025-04-08 16:16:13 http: GET /?limit=50&page=1&tag=ios 304 - 16ms
+2025-04-08 16:16:14 http: GET /api/articles?limit=50&page=1&tag=whatsapp - Request received
+2025-04-08 16:16:14 debug: Using single tag filter: whatsapp
+2025-04-08 16:16:14 debug: Fetching articles with filters: feedId=null, tags=whatsapp, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:16:14 debug: Retrieved 2 articles out of 2 total
+2025-04-08 16:16:14 http: GET /?limit=50&page=1&tag=whatsapp 304 - 16ms
+2025-04-08 16:16:16 http: GET /api/articles?limit=50&page=1&tag=space - Request received
+2025-04-08 16:16:16 debug: Using single tag filter: space
+2025-04-08 16:16:16 debug: Fetching articles with filters: feedId=null, tags=space, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:16:16 debug: Retrieved 8 articles out of 8 total
+2025-04-08 16:16:16 http: GET /?limit=50&page=1&tag=space 304 - 19ms
+2025-04-08 16:16:51 http: GET /api/articles?limit=50&page=1&feedId=67f3cee5df9b8944e6c75810 - Request received
+2025-04-08 16:16:51 debug: Fetching articles with filters: feedId=67f3cee5df9b8944e6c75810, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:16:51 debug: Retrieved 36 articles out of 36 total
+2025-04-08 16:16:51 http: GET /?limit=50&page=1&feedId=67f3cee5df9b8944e6c75810 304 - 20ms
+2025-04-08 16:16:53 http: GET /api/articles?limit=50&page=1&feedId=67f3fdf878a772a4082505ef - Request received
+2025-04-08 16:16:53 debug: Fetching articles with filters: feedId=67f3fdf878a772a4082505ef, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:16:53 debug: Retrieved 19 articles out of 19 total
+2025-04-08 16:16:53 http: GET /?limit=50&page=1&feedId=67f3fdf878a772a4082505ef 200 - 13ms
+2025-04-08 16:16:54 http: GET /api/articles?limit=50&page=1&feedId=67f3fe3178a772a408250673 - Request received
+2025-04-08 16:16:54 debug: Fetching articles with filters: feedId=67f3fe3178a772a408250673, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:16:54 debug: Retrieved 50 articles out of 50 total
+2025-04-08 16:16:54 http: GET /?limit=50&page=1&feedId=67f3fe3178a772a408250673 304 - 19ms
+2025-04-08 16:21:37 http: GET /api/users/profile - Request received
+2025-04-08 16:21:37 http: GET /api/categories - Request received
+2025-04-08 16:21:37 http: GET /api/feeds - Request received
+2025-04-08 16:21:37 http: GET /api/tags - Request received
+2025-04-08 16:21:37 http: GET / 304 - 10ms
+2025-04-08 16:21:37 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:21:37 http: GET /profile 304 - 25ms
+2025-04-08 16:21:37 http: GET / 304 - 21ms
+2025-04-08 16:21:37 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:21:37 http: GET / 304 - 28ms
+2025-04-08 16:21:37 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:21:37 http: GET /?limit=50&page=1 304 - 41ms
+2025-04-08 16:21:37 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:21:37 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:21:37 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:21:37 http: GET /?limit=50&page=1 304 - 21ms
+2025-04-08 16:21:43 http: GET /api/categories - Request received
+2025-04-08 16:21:43 http: GET /api/users/profile - Request received
+2025-04-08 16:21:43 http: GET /api/tags - Request received
+2025-04-08 16:21:43 http: GET /api/feeds - Request received
+2025-04-08 16:21:43 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:21:43 http: GET / 304 - 37ms
+2025-04-08 16:21:43 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:21:43 http: GET /profile 304 - 47ms
+2025-04-08 16:21:43 http: GET / 304 - 47ms
+2025-04-08 16:21:43 http: GET / 304 - 76ms
+2025-04-08 16:21:43 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:21:43 http: GET /?limit=50&page=1 304 - 74ms
+2025-04-08 16:21:43 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:21:43 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:21:43 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:21:43 http: GET /?limit=50&page=1 304 - 54ms
+2025-04-08 16:22:19 http: GET /api/users/profile - Request received
+2025-04-08 16:22:19 http: GET /api/categories - Request received
+2025-04-08 16:22:19 http: GET /api/tags - Request received
+2025-04-08 16:22:19 http: GET /profile 304 - 10ms
+2025-04-08 16:22:19 http: GET /api/feeds - Request received
+2025-04-08 16:22:19 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:22:19 http: GET / 304 - 12ms
+2025-04-08 16:22:19 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:22:19 http: GET / 304 - 16ms
+2025-04-08 16:22:19 http: GET / 304 - 13ms
+2025-04-08 16:22:19 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:22:19 http: GET /?limit=50&page=1 304 - 25ms
+2025-04-08 16:22:19 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:22:19 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:22:19 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:22:19 http: GET /?limit=50&page=1 304 - 22ms
+2025-04-08 16:23:05 http: GET /api/users/profile - Request received
+2025-04-08 16:23:05 http: GET /api/categories - Request received
+2025-04-08 16:23:05 http: GET /api/tags - Request received
+2025-04-08 16:23:05 http: GET /api/feeds - Request received
+2025-04-08 16:23:05 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:23:05 http: GET / 304 - 28ms
+2025-04-08 16:23:05 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:05 http: GET /profile 304 - 60ms
+2025-04-08 16:23:05 http: GET / 304 - 36ms
+2025-04-08 16:23:05 http: GET / 304 - 35ms
+2025-04-08 16:23:05 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:23:05 http: GET /?limit=50&page=1 304 - 85ms
+2025-04-08 16:23:05 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:23:05 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:05 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:23:05 http: GET /?limit=50&page=1 304 - 22ms
+2025-04-08 16:23:08 http: GET /api/articles?limit=50&page=1&feedId=67f3fe3178a772a408250673 - Request received
+2025-04-08 16:23:08 debug: Fetching articles with filters: feedId=67f3fe3178a772a408250673, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:08 debug: Retrieved 50 articles out of 50 total
+2025-04-08 16:23:08 http: GET /?limit=50&page=1&feedId=67f3fe3178a772a408250673 304 - 18ms
+2025-04-08 16:23:09 http: GET /api/articles?limit=50&page=1&feedId=67f3cee5df9b8944e6c75810 - Request received
+2025-04-08 16:23:09 debug: Fetching articles with filters: feedId=67f3cee5df9b8944e6c75810, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:09 debug: Retrieved 36 articles out of 36 total
+2025-04-08 16:23:09 http: GET /?limit=50&page=1&feedId=67f3cee5df9b8944e6c75810 304 - 19ms
+2025-04-08 16:23:10 http: GET /api/articles?limit=50&page=1&tag=ios - Request received
+2025-04-08 16:23:10 debug: Using single tag filter: ios
+2025-04-08 16:23:10 debug: Fetching articles with filters: feedId=null, tags=ios, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:10 debug: Retrieved 6 articles out of 6 total
+2025-04-08 16:23:10 http: GET /?limit=50&page=1&tag=ios 304 - 10ms
+2025-04-08 16:23:12 http: GET /api/articles?limit=50&page=1&tag=whatsapp - Request received
+2025-04-08 16:23:12 debug: Using single tag filter: whatsapp
+2025-04-08 16:23:12 debug: Fetching articles with filters: feedId=null, tags=whatsapp, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:12 debug: Retrieved 2 articles out of 2 total
+2025-04-08 16:23:12 http: GET /?limit=50&page=1&tag=whatsapp 304 - 8ms
+2025-04-08 16:23:13 http: GET /api/articles?limit=50&page=1&tag=ios - Request received
+2025-04-08 16:23:13 debug: Using single tag filter: ios
+2025-04-08 16:23:13 debug: Fetching articles with filters: feedId=null, tags=ios, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:13 debug: Retrieved 6 articles out of 6 total
+2025-04-08 16:23:13 http: GET /?limit=50&page=1&tag=ios 304 - 10ms
+2025-04-08 16:23:16 http: GET /api/articles?limit=50&page=1&tag=space - Request received
+2025-04-08 16:23:16 debug: Using single tag filter: space
+2025-04-08 16:23:16 debug: Fetching articles with filters: feedId=null, tags=space, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:16 debug: Retrieved 8 articles out of 8 total
+2025-04-08 16:23:16 http: GET /?limit=50&page=1&tag=space 304 - 11ms
+2025-04-08 16:23:17 http: GET /api/articles?limit=50&page=1&tag=whatsapp - Request received
+2025-04-08 16:23:17 debug: Using single tag filter: whatsapp
+2025-04-08 16:23:17 debug: Fetching articles with filters: feedId=null, tags=whatsapp, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:17 debug: Retrieved 2 articles out of 2 total
+2025-04-08 16:23:17 http: GET /?limit=50&page=1&tag=whatsapp 304 - 9ms
+2025-04-08 16:23:19 http: GET /api/articles?limit=50&page=1&tag=ios - Request received
+2025-04-08 16:23:19 debug: Using single tag filter: ios
+2025-04-08 16:23:19 debug: Fetching articles with filters: feedId=null, tags=ios, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:19 debug: Retrieved 6 articles out of 6 total
+2025-04-08 16:23:19 http: GET /?limit=50&page=1&tag=ios 304 - 11ms
+2025-04-08 16:23:22 http: GET /api/articles?limit=50&page=1&tag=whatsapp - Request received
+2025-04-08 16:23:22 debug: Using single tag filter: whatsapp
+2025-04-08 16:23:22 debug: Fetching articles with filters: feedId=null, tags=whatsapp, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:22 debug: Retrieved 2 articles out of 2 total
+2025-04-08 16:23:22 http: GET /?limit=50&page=1&tag=whatsapp 304 - 11ms
+2025-04-08 16:23:23 http: GET /api/articles?limit=50&page=1&tag=ios - Request received
+2025-04-08 16:23:23 debug: Using single tag filter: ios
+2025-04-08 16:23:23 debug: Fetching articles with filters: feedId=null, tags=ios, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:23 debug: Retrieved 6 articles out of 6 total
+2025-04-08 16:23:23 http: GET /?limit=50&page=1&tag=ios 304 - 10ms
+2025-04-08 16:23:24 http: GET /api/articles?limit=50&page=1&tag=whatsapp - Request received
+2025-04-08 16:23:24 debug: Using single tag filter: whatsapp
+2025-04-08 16:23:24 debug: Fetching articles with filters: feedId=null, tags=whatsapp, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:24 debug: Retrieved 2 articles out of 2 total
+2025-04-08 16:23:24 http: GET /?limit=50&page=1&tag=whatsapp 304 - 9ms
+2025-04-08 16:23:25 http: GET /api/articles?limit=50&page=1&tag=space - Request received
+2025-04-08 16:23:25 debug: Using single tag filter: space
+2025-04-08 16:23:25 debug: Fetching articles with filters: feedId=null, tags=space, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:25 debug: Retrieved 8 articles out of 8 total
+2025-04-08 16:23:25 http: GET /?limit=50&page=1&tag=space 304 - 11ms
+2025-04-08 16:23:25 http: GET /api/articles?limit=50&page=1&tag=ios - Request received
+2025-04-08 16:23:25 debug: Using single tag filter: ios
+2025-04-08 16:23:25 debug: Fetching articles with filters: feedId=null, tags=ios, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:23:25 debug: Retrieved 6 articles out of 6 total
+2025-04-08 16:23:25 http: GET /?limit=50&page=1&tag=ios 304 - 8ms
+2025-04-08 16:32:56 http: GET /api/users/profile - Request received
+2025-04-08 16:32:56 http: GET /api/categories - Request received
+2025-04-08 16:32:56 http: GET /api/tags - Request received
+2025-04-08 16:32:56 http: GET /api/feeds - Request received
+2025-04-08 16:32:56 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:32:56 http: GET / 304 - 13ms
+2025-04-08 16:32:56 http: GET /profile 304 - 20ms
+2025-04-08 16:32:56 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:32:56 http: GET / 304 - 19ms
+2025-04-08 16:32:56 http: GET / 304 - 20ms
+2025-04-08 16:32:56 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:32:56 http: GET /?limit=50&page=1 304 - 38ms
+2025-04-08 16:32:56 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:32:56 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:32:56 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:32:56 http: GET /?limit=50&page=1 304 - 29ms
+2025-04-08 16:32:56 http: GET /api/feeds/67f3cee5df9b8944e6c75810/check-new-content - Request received
+2025-04-08 16:32:56 http: GET /api/feeds/67f3fdf878a772a4082505ef/check-new-content - Request received
+2025-04-08 16:32:56 http: GET /api/feeds/67f3fe3178a772a408250673/check-new-content - Request received
+2025-04-08 16:32:56 http: GET /67f3cee5df9b8944e6c75810/check-new-content 200 - 386ms
+2025-04-08 16:32:57 http: GET /67f3fdf878a772a4082505ef/check-new-content 200 - 450ms
+2025-04-08 16:32:59 http: GET /67f3fe3178a772a408250673/check-new-content 304 - 3186ms
+2025-04-08 16:33:34 http: GET /api/categories - Request received
+2025-04-08 16:33:34 http: GET /api/tags - Request received
+2025-04-08 16:33:34 http: GET /api/feeds - Request received
+2025-04-08 16:33:34 http: GET / 304 - 10ms
+2025-04-08 16:33:34 http: GET / 304 - 15ms
+2025-04-08 16:33:34 http: GET / 304 - 14ms
+2025-04-08 16:33:34 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:33:34 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:33:34 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:33:34 http: GET /?limit=50&page=1 304 - 24ms
+2025-04-08 16:34:00 http: GET /api/categories - Request received
+2025-04-08 16:34:00 http: GET /api/tags - Request received
+2025-04-08 16:34:00 http: GET /api/feeds - Request received
+2025-04-08 16:34:00 http: GET / 304 - 23ms
+2025-04-08 16:34:00 http: GET / 304 - 32ms
+2025-04-08 16:34:00 http: GET / 304 - 26ms
+2025-04-08 16:34:00 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:34:00 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:34:00 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:34:00 http: GET /?limit=50&page=1 304 - 34ms
+2025-04-08 16:34:42 http: GET /api/categories - Request received
+2025-04-08 16:34:42 http: GET /api/tags - Request received
+2025-04-08 16:34:42 http: GET /api/feeds - Request received
+2025-04-08 16:34:42 http: GET / 304 - 9ms
+2025-04-08 16:34:42 http: GET / 304 - 14ms
+2025-04-08 16:34:42 http: GET / 304 - 14ms
+2025-04-08 16:34:42 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:34:42 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:34:42 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:34:42 http: GET /?limit=50&page=1 304 - 30ms
+2025-04-08 16:35:01 http: GET /api/categories - Request received
+2025-04-08 16:35:01 http: GET /api/tags - Request received
+2025-04-08 16:35:01 http: GET /api/feeds - Request received
+2025-04-08 16:35:01 http: GET / 304 - 18ms
+2025-04-08 16:35:01 http: GET / 304 - 21ms
+2025-04-08 16:35:01 http: GET / 304 - 16ms
+2025-04-08 16:35:01 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:35:01 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:35:01 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:35:01 http: GET /?limit=50&page=1 304 - 45ms
+2025-04-08 16:35:09 http: GET /api/users/profile - Request received
+2025-04-08 16:35:09 http: GET /profile 304 - 10ms
+2025-04-08 16:35:09 http: GET /api/categories - Request received
+2025-04-08 16:35:09 http: GET /api/feeds - Request received
+2025-04-08 16:35:09 http: GET /api/tags - Request received
+2025-04-08 16:35:09 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:35:09 http: GET / 304 - 16ms
+2025-04-08 16:35:09 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:35:09 http: GET / 304 - 24ms
+2025-04-08 16:35:09 http: GET / 304 - 39ms
+2025-04-08 16:35:09 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:35:09 http: GET /?limit=50&page=1 304 - 44ms
+2025-04-08 16:35:10 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:35:10 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:35:10 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:35:10 http: GET /?limit=50&page=1 304 - 26ms
+2025-04-08 16:35:12 http: GET /api/articles?limit=50&page=1&tag=ios - Request received
+2025-04-08 16:35:12 debug: Using single tag filter: ios
+2025-04-08 16:35:12 debug: Fetching articles with filters: feedId=null, tags=ios, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:35:12 debug: Retrieved 6 articles out of 6 total
+2025-04-08 16:35:12 http: GET /?limit=50&page=1&tag=ios 304 - 14ms
+2025-04-08 16:35:14 http: GET /api/articles?limit=50&page=1&tag=ios,whatsapp - Request received
+2025-04-08 16:35:14 debug: Using single tag filter: ios,whatsapp
+2025-04-08 16:35:14 debug: Fetching articles with filters: feedId=null, tags=ios,whatsapp, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:35:14 debug: Retrieved 0 articles out of 0 total
+2025-04-08 16:35:14 http: GET /?limit=50&page=1&tag=ios,whatsapp 200 - 11ms
+2025-04-08 16:35:22 http: GET /api/articles?limit=50&page=1&tag=whatsapp,ios - Request received
+2025-04-08 16:35:22 debug: Using single tag filter: whatsapp,ios
+2025-04-08 16:35:22 debug: Fetching articles with filters: feedId=null, tags=whatsapp,ios, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:35:22 debug: Retrieved 0 articles out of 0 total
+2025-04-08 16:35:22 http: GET /?limit=50&page=1&tag=whatsapp,ios 200 - 14ms
+2025-04-08 16:35:25 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:35:25 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:35:25 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:35:25 http: GET /?limit=50&page=1 304 - 28ms
+2025-04-08 16:35:27 http: GET /api/articles?limit=50&page=1&tag=space - Request received
+2025-04-08 16:35:27 debug: Using single tag filter: space
+2025-04-08 16:35:27 debug: Fetching articles with filters: feedId=null, tags=space, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:35:27 debug: Retrieved 8 articles out of 8 total
+2025-04-08 16:35:27 http: GET /?limit=50&page=1&tag=space 304 - 10ms
+2025-04-08 16:35:29 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:35:29 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:35:29 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:35:29 http: GET /?limit=50&page=1 304 - 25ms
+2025-04-08 16:35:30 http: GET /api/articles?limit=50&page=1&tag=whatsapp - Request received
+2025-04-08 16:35:30 debug: Using single tag filter: whatsapp
+2025-04-08 16:35:30 debug: Fetching articles with filters: feedId=null, tags=whatsapp, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:35:30 debug: Retrieved 2 articles out of 2 total
+2025-04-08 16:35:30 http: GET /?limit=50&page=1&tag=whatsapp 304 - 8ms
+2025-04-08 16:35:32 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 16:35:32 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 16:35:32 debug: Retrieved 50 articles out of 105 total
+2025-04-08 16:35:32 http: GET /?limit=50&page=1 304 - 33ms
+2025-04-08 19:11:34 info: Server running in development mode on port 5000
+2025-04-08 19:11:34 info: MongoDB Connected: localhost
+2025-04-08 19:14:16 http: GET /api/articles?limit=50&page=1&tag=ios - Request received
+2025-04-08 19:14:17 debug: Using single tag filter: ios
+2025-04-08 19:14:17 debug: Fetching articles with filters: feedId=null, tags=ios, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:14:17 debug: Retrieved 6 articles out of 6 total
+2025-04-08 19:14:17 http: GET /?limit=50&page=1&tag=ios 304 - 84ms
+2025-04-08 19:14:23 http: GET /api/articles?limit=50&page=1&tag=ios,whatsapp - Request received
+2025-04-08 19:14:23 debug: Using single tag filter: ios,whatsapp
+2025-04-08 19:14:23 debug: Fetching articles with filters: feedId=null, tags=ios,whatsapp, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:14:23 debug: Retrieved 0 articles out of 0 total
+2025-04-08 19:14:23 http: GET /?limit=50&page=1&tag=ios,whatsapp 304 - 15ms
+2025-04-08 19:14:29 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 19:14:29 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:14:29 debug: Retrieved 50 articles out of 105 total
+2025-04-08 19:14:29 http: GET /?limit=50&page=1 304 - 50ms

@@ -173,6 +173,20 @@ export const AppSidebar = () => {
     await refreshFeed(feedId);
   };
 
+  // Handle tag click with proper multi-tag selection
+  const handleTagClick = (tag: TagType) => {
+    // Check if the tag is already selected
+    const isSelected = selectedTags?.some(t => t._id === tag._id);
+    
+    if (isSelected) {
+      // If already selected, deselect it
+      deselectTag(tag._id);
+    } else {
+      // If not selected, add it to selection
+      selectTag(tag);
+    }
+  };
+
   return (
     <>
       <Sidebar className="border-r shadow-sm">
@@ -292,23 +306,52 @@ export const AppSidebar = () => {
                 </Button>
               </SidebarGroupLabel>
               <SidebarGroupContent>
-                {filteredTags.map((tag) => (
-                  <button
-                    key={tag._id}
-                    onClick={() => selectTag(tag)}
-                    className={`flex items-center gap-2 w-full p-2 rounded-md text-left text-sm ${
-                      selectedTags && selectedTags.some(t => t._id === tag._id)
-                        ? 'bg-primary/10 text-primary font-medium'
-                        : 'hover:bg-secondary'
-                    }`}
-                  >
-                    <div 
-                      className="h-3 w-3 rounded-full" 
-                      style={{ backgroundColor: tag.color }}
-                    />
-                    <span className="truncate">#{tag.name}</span>
-                  </button>
-                ))}
+                {/* Show selected tags at the top with prominent styling */}
+                {selectedTags.length > 0 && (
+                  <div className="mb-2 px-2">
+                    <div className="text-xs text-muted-foreground mb-1 px-1">Selected Tags</div>
+                    {selectedTags.map((tag) => (
+                      <div 
+                        key={`selected-${tag._id}`}
+                        className="flex items-center justify-between w-full p-2 mb-1 rounded-md bg-primary/10 text-primary font-medium text-sm"
+                      >
+                        <div className="flex items-center gap-2 truncate">
+                          <div 
+                            className="h-3 w-3 rounded-full" 
+                            style={{ backgroundColor: tag.color }}
+                          />
+                          <span className="truncate">#{tag.name}</span>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-5 w-5 rounded-full hover:bg-destructive/10 hover:text-destructive"
+                          onClick={() => deselectTag(tag._id)}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    ))}
+                    <div className="border-b border-border/50 my-2"></div>
+                  </div>
+                )}
+
+                {/* Show unselected tags below */}
+                {filteredTags
+                  .filter(tag => !selectedTags.some(selectedTag => selectedTag._id === tag._id))
+                  .map((tag) => (
+                    <button
+                      key={tag._id}
+                      onClick={() => handleTagClick(tag)}
+                      className="flex items-center gap-2 w-full p-2 rounded-md text-left text-sm hover:bg-secondary"
+                    >
+                      <div 
+                        className="h-3 w-3 rounded-full" 
+                        style={{ backgroundColor: tag.color }}
+                      />
+                      <span className="truncate">#{tag.name}</span>
+                    </button>
+                  ))}
               </SidebarGroupContent>
             </SidebarGroup>
           </ScrollArea>

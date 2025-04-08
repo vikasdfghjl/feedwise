@@ -35,7 +35,7 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [error, setError] = useState<string | null>(null);
   
   const [selectedFeed, setSelectedFeed] = useState<Feed | null>(null);
-  const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
+  const [selectedTags, setSelectedTags] = useState<Tag[]>([]); // Changed from selectedTag to selectedTags array
   const [searchQuery, setSearchQuery] = useState('');
   const [timeFilter, setTimeFilter] = useState<TimeFilterOption>('all');
   const [shouldFetchArticles, setShouldFetchArticles] = useState<boolean>(true);
@@ -88,13 +88,21 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const calculateRelevanceScores = (articlesToScore: Article[], userTags: Tag[]) => {
     return articlesToScore.map(article => {
       let relevanceScore = 0;
+      let matchedTags = 0;
+      
       // Base score from article tags matching user tags
       if (article.tags && userTags.length > 0) {
         userTags.forEach(userTag => {
           if (article.tags?.includes(userTag.name)) {
             relevanceScore += 0.25; // Increase score for each matching tag
+            matchedTags++;
           }
         });
+      }
+      
+      // Bonus for matching all selected tags
+      if (selectedTags.length > 0 && matchedTags === selectedTags.length) {
+        relevanceScore += 0.5; // Significant boost for matching all selected tags
       }
       
       // Recency bonus (newer articles get higher scores)
@@ -113,7 +121,8 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       return {
         ...article,
-        relevanceScore: Math.min(Math.max(relevanceScore, 0), 1) // Clamp between 0 and 1
+        relevanceScore: Math.min(Math.max(relevanceScore, 0), 1), // Clamp between 0 and 1
+        matchedTagCount: matchedTags // Track how many selected tags were matched
       };
     });
   };
@@ -135,7 +144,7 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Filter articles locally instead of fetching from the server
       setArticles(prevArticles => {
         // If no feed or tag is selected, show all articles (no filtering needed)
-        if (!selectedFeed && !selectedTag) {
+        if (!selectedFeed && selectedTags.length === 0) {
           return prevArticles;
         }
         
@@ -147,8 +156,8 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
           
           // If a tag is selected, show only articles with that tag
-          if (selectedTag && article.tags && article.tags.includes(selectedTag.name)) {
-            return true;
+          if (selectedTags.length > 0 && article.tags) {
+            return selectedTags.some(tag => article.tags.includes(tag.name));
           }
           
           return false;
@@ -170,7 +179,7 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
             limit: 50, 
             page: 1,
             ...(selectedFeed ? { feedId: selectedFeed._id } : {}),
-            ...(selectedTag ? { tag: selectedTag.name } : {})
+            ...(selectedTags.length > 0 ? { tag: selectedTags.map(tag => tag.name).join(',') } : {})
           };
           
           const response = await api.getSavedArticles(params);
@@ -189,7 +198,7 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
           tag?: string;
         } = { limit: 50, page: 1 };
         if (selectedFeed) params.feedId = selectedFeed._id;
-        if (selectedTag) params.tag = selectedTag.name;
+        if (selectedTags.length > 0) params.tag = selectedTags.map(tag => tag.name).join(',');
         
         const response = await api.getArticles(params);
         setArticles(response.data.articles);
@@ -208,17 +217,14 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (shouldFetchArticles) {
       fetchFilteredArticles();
     }
-  }, [selectedFeed, selectedTag, searchQuery, isPublicRoute, shouldFetchArticles]);
+  }, [selectedFeed, selectedTags, searchQuery, isPublicRoute, shouldFetchArticles]);
   
-  // Compute filtered articles based on selected feed, tag, search query, and time filter
+  // Compute filtered articles based on selected feed, tags, search query, and time filter
   const filteredArticles = React.useMemo(() => {
     let filtered = [...articles];
     
-    // We don't need to filter by selectedFeed or selectedTag anymore
-    // since we're fetching filtered articles from the API
-    
-    // Filter by search query
-    if (searchQuery) {
+    // Filter by search query (if it's not the special saved:true query)
+    if (searchQuery && searchQuery.toLowerCase().trim() !== 'saved:true') {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(article => 
         article.title.toLowerCase().includes(query) || 
@@ -249,19 +255,35 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
     }
     
-    // Sort by a combination of relevance score and recency
+    // Sort by a combination of matched tags, relevance score, and recency
     filtered.sort((a, b) => {
-      // If relevance score difference is significant, prioritize that
+      // First prioritize articles that match all selected tags
+      const aMatchesAllTags = selectedTags.length > 0 && 
+                             (a.matchedTagCount || 0) === selectedTags.length;
+      const bMatchesAllTags = selectedTags.length > 0 && 
+                             (b.matchedTagCount || 0) === selectedTags.length;
+      
+      if (aMatchesAllTags && !bMatchesAllTags) return -1;
+      if (!aMatchesAllTags && bMatchesAllTags) return 1;
+      
+      // If both have the same "matches all" status, compare matched tag count
+      if (selectedTags.length > 0) {
+        const tagCountDiff = (b.matchedTagCount || 0) - (a.matchedTagCount || 0);
+        if (tagCountDiff !== 0) return tagCountDiff;
+      }
+      
+      // If tag matches are the same, compare relevance scores
       const relevanceDiff = (b.relevanceScore || 0) - (a.relevanceScore || 0);
-      if (Math.abs(relevanceDiff) > 0.3) {
+      if (Math.abs(relevanceDiff) > 0.2) {
         return relevanceDiff;
       }
-      // Otherwise fall back to sorting by date
+      
+      // Finally sort by date
       return new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime();
     });
     
     return filtered;
-  }, [articles, searchQuery, timeFilter]);
+  }, [articles, searchQuery, timeFilter, selectedTags]);
 
   const addFeed = async (feedData: { url: string, category: string, tags?: string[] }) => {
     try {
@@ -343,7 +365,7 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const selectFeed = (feed: Feed | null) => {
     setSelectedFeed(feed);
-    setSelectedTag(null); // Clear tag selection when selecting a feed
+    setSelectedTags([]); // Clear tag selection when selecting a feed
     // Clear the saved view flag when selecting a feed
     setIsSavedView(false);
     // Set shouldFetchArticles to true to force a fresh fetch from the API
@@ -351,7 +373,11 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const selectTag = (tag: Tag | null) => {
-    setSelectedTag(tag);
+    if (tag) {
+      setSelectedTags(prev => [...prev, tag]);
+    } else {
+      setSelectedTags([]);
+    }
     setSelectedFeed(null); // Clear feed selection when selecting a tag
     // Clear the saved view flag when selecting a tag
     setIsSavedView(false);
@@ -365,6 +391,31 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     
     // Set shouldFetchArticles to true to force a fresh fetch from the API
+    setShouldFetchArticles(true);
+  };
+
+  // Add a method to deselect a tag (remove it from selection)
+  const deselectTag = (tagId: string) => {
+    setSelectedTags(prev => prev.filter(tag => tag._id !== tagId));
+    
+    // If we have removed all tags, no need to fetch
+    if (selectedTags.length <= 1) {
+      // Reset search results to all articles if no tags are selected
+      setShouldFetchArticles(true);
+    } else {
+      // Recalculate relevance scores with the remaining tags
+      setArticles(prev => calculateRelevanceScores(prev, 
+        selectedTags.filter(tag => tag._id !== tagId)
+      ));
+    }
+  };
+  
+  // Add a method to clear all selected tags
+  const clearTagSelection = () => {
+    if (selectedTags.length === 0) return; // Nothing to clear
+    
+    setSelectedTags([]);
+    // Reset search results to all articles
     setShouldFetchArticles(true);
   };
 
@@ -546,8 +597,8 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Remove tag from state
       setTags(prev => prev.filter(tag => tag._id !== id));
       
-      if (selectedTag?._id === id) {
-        setSelectedTag(null);
+      if (selectedTags.some(tag => tag._id === id)) {
+        setSelectedTags(prev => prev.filter(tag => tag._id !== id));
       }
       
       setLoading(false);
@@ -605,8 +656,8 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
         articlesParams.feedId = id;
       } else if (selectedFeed) {
         articlesParams.feedId = selectedFeed._id;
-      } else if (selectedTag) {
-        articlesParams.tag = selectedTag.name;
+      } else if (selectedTags.length > 0) {
+        articlesParams.tag = selectedTags.map(tag => tag.name).join(',');
       }
       
       const articlesRes = await api.getArticles(articlesParams);
@@ -677,7 +728,7 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const handleSavedArticles = useCallback(() => {
     // Clear feed and tag selection
     setSelectedFeed(null);
-    setSelectedTag(null);
+    setSelectedTags([]);
     
     // Set isSavedView flag to true BEFORE fetching
     setIsSavedView(true);
@@ -720,7 +771,7 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
         categories,
         filteredArticles,
         selectedFeed,
-        selectedTag,
+        selectedTags,
         searchQuery,
         timeFilter,
         loading,
@@ -730,6 +781,8 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
         removeFeed,
         selectFeed,
         selectTag,
+        deselectTag,
+        clearTagSelection,
         setSearchQuery,
         setTimeFilter,
         markAsRead,
