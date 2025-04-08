@@ -27,14 +27,29 @@ export const getArticles = asyncHandler(async (req: AuthRequest, res: Response) 
   
   // Filter options
   const feedId = req.query.feedId ? req.query.feedId : null;
-  const tag = req.query.tag ? req.query.tag : null;
+  
+  // Handle both single tag and multiple tags
+  let tagFilter = null;
+  if (req.query.tags) {
+    // Handle array of tags
+    const tags = Array.isArray(req.query.tags) 
+      ? req.query.tags 
+      : [req.query.tags];
+    tagFilter = tags;
+    logger.debug(`Using multiple tags filter: ${tags.join(', ')}`);
+  } else if (req.query.tag) {
+    // Legacy support for single tag
+    tagFilter = [req.query.tag];
+    logger.debug(`Using single tag filter: ${req.query.tag}`);
+  }
+  
   const isRead = req.query.isRead === 'true' ? true : req.query.isRead === 'false' ? false : null;
   const isSaved = req.query.isSaved === 'true' ? true : null;
   
   // Check if this is a request from the sidebar for saved articles
   const isFromSidebar = req.query.source === 'sidebar' && isSaved;
   
-  logger.debug(`Fetching articles with filters: feedId=${feedId}, tag=${tag}, isRead=${isRead}, isSaved=${isSaved}, isFromSidebar=${isFromSidebar}`);
+  logger.debug(`Fetching articles with filters: feedId=${feedId}, tags=${tagFilter}, isRead=${isRead}, isSaved=${isSaved}, isFromSidebar=${isFromSidebar}`);
   
   // Special case for saved articles - use the SavedArticle collection for better performance
   if (isSaved) {
@@ -72,7 +87,18 @@ export const getArticles = asyncHandler(async (req: AuthRequest, res: Response) 
       userId: req.user._id
     };
     if (feedId) articleFilter.feedId = feedId;
-    if (tag) articleFilter.tags = tag;
+    
+    // Apply tag filtering
+    if (tagFilter && tagFilter.length > 0) {
+      if (tagFilter.length === 1) {
+        // Single tag filter
+        articleFilter.tags = tagFilter[0];
+      } else {
+        // Multiple tags filter - articles must contain ALL tags (AND logic)
+        articleFilter.tags = { $all: tagFilter };
+      }
+    }
+    
     if (isRead !== null) articleFilter.isRead = isRead;
     
     // Get the full article data
@@ -99,7 +125,18 @@ export const getArticles = asyncHandler(async (req: AuthRequest, res: Response) 
   // Regular article fetching for non-saved filters
   const filter: any = { userId: req.user._id };
   if (feedId) filter.feedId = feedId;
-  if (tag) filter.tags = tag;
+  
+  // Apply tag filtering
+  if (tagFilter && tagFilter.length > 0) {
+    if (tagFilter.length === 1) {
+      // Single tag filter
+      filter.tags = tagFilter[0];
+    } else {
+      // Multiple tags filter - articles must contain ALL tags (AND logic)
+      filter.tags = { $all: tagFilter };
+    }
+  }
+  
   if (isRead !== null) filter.isRead = isRead;
   
   // Get articles
@@ -330,10 +367,25 @@ export const getSavedArticles = asyncHandler(async (req: AuthRequest, res: Respo
   
   // Filter options
   const feedId = req.query.feedId ? req.query.feedId : null;
-  const tag = req.query.tag ? req.query.tag : null;
+  
+  // Handle both single tag and multiple tags
+  let tagFilter = null;
+  if (req.query.tags) {
+    // Handle array of tags
+    const tags = Array.isArray(req.query.tags) 
+      ? req.query.tags 
+      : [req.query.tags];
+    tagFilter = tags;
+    logger.debug(`Using multiple tags filter: ${tags.join(', ')}`);
+  } else if (req.query.tag) {
+    // Legacy support for single tag
+    tagFilter = [req.query.tag];
+    logger.debug(`Using single tag filter: ${req.query.tag}`);
+  }
+  
   const isRead = req.query.isRead === 'true' ? true : req.query.isRead === 'false' ? false : null;
   
-  logger.debug(`Fetching saved articles with filters: feedId=${feedId}, tag=${tag}, isRead=${isRead}`);
+  logger.debug(`Fetching saved articles with filters: feedId=${feedId}, tags=${tagFilter}, isRead=${isRead}`);
   
   // Get saved article IDs for this user
   const savedArticlesQuery = SavedArticle.find({ userId: req.user._id })
@@ -367,7 +419,18 @@ export const getSavedArticles = asyncHandler(async (req: AuthRequest, res: Respo
     userId: req.user._id
   };
   if (feedId) articleFilter.feedId = feedId;
-  if (tag) articleFilter.tags = tag;
+  
+  // Apply tag filtering
+  if (tagFilter && tagFilter.length > 0) {
+    if (tagFilter.length === 1) {
+      // Single tag filter
+      articleFilter.tags = tagFilter[0];
+    } else {
+      // Multiple tags filter - articles must contain ALL tags (AND logic)
+      articleFilter.tags = { $all: tagFilter };
+    }
+  }
+  
   if (isRead !== null) articleFilter.isRead = isRead;
   
   // Get the full article data

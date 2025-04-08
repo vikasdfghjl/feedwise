@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Rss, Tag, Bookmark, Settings, Search, ChevronLeft, ChevronRight, RefreshCw, BellRing } from 'lucide-react';
+import { Plus, Rss, Tag, Bookmark, Settings, Search, ChevronLeft, ChevronRight, RefreshCw, BellRing, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useFeed } from '@/hooks/useFeed';
 import * as api from '@/services/api';
@@ -20,7 +20,8 @@ import { Input } from '@/components/ui/input';
 import { AddFeedDialog } from './AddFeedDialog';
 import { TagManagement } from './TagManagement';
 import { SettingsDialog } from './SettingsDialog';
-import { Feed } from '@/types';
+import { Feed, Tag as TagType } from '@/types';
+import { Spinner } from '@/components/ui/spinner'; // Import the Spinner component
 
 // Create a component for the new content notification button
 const NewContentNotification = ({ feed, onFetch }: { feed: Feed, onFetch: (id: string, e: React.MouseEvent) => Promise<void> }) => {
@@ -39,14 +40,66 @@ const NewContentNotification = ({ feed, onFetch }: { feed: Feed, onFetch: (id: s
   );
 };
 
+// New component for selected tags display
+const SelectedTagsDisplay = ({ 
+  selectedTags, 
+  onDeselect, 
+  onClearAll 
+}: { 
+  selectedTags: TagType[], 
+  onDeselect: (tagId: string) => void,
+  onClearAll: () => void
+}) => {
+  if (!selectedTags || selectedTags.length === 0) return null;
+  
+  return (
+    <div className="px-4 mb-3">
+      <div className="flex justify-between items-center mb-1">
+        <span className="text-xs text-muted-foreground">Selected Tags</span>
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="h-5 px-2 text-xs"
+          onClick={onClearAll}
+        >
+          Clear All
+        </Button>
+      </div>
+      <div className="flex flex-wrap gap-1">
+        {selectedTags.map(tag => (
+          <Badge 
+            key={tag._id} 
+            variant="outline" 
+            className="flex items-center gap-1 px-2 py-1"
+            style={{ borderColor: tag.color, color: tag.color }}
+          >
+            <span>#{tag.name}</span>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="h-3 w-3 p-0 rounded-full hover:bg-primary/10"
+              onClick={() => onDeselect(tag._id)}
+            >
+              <X className="h-2 w-2" />
+            </Button>
+          </Badge>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export const AppSidebar = () => {
   const { 
     feeds, 
     tags, 
     selectedFeed, 
-    selectedTag,
+    selectedTags, // Changed from selectedTag to selectedTags array
     selectFeed, 
     selectTag,
+    deselectTag, // New function to remove a tag from selection
+    clearTagSelection, // New function to clear all selected tags
     searchQuery,
     setSearchQuery,
     refreshFeed,
@@ -152,6 +205,13 @@ export const AppSidebar = () => {
             </div>
           </div>
           
+          {/* Display selected tags */}
+          <SelectedTagsDisplay 
+            selectedTags={selectedTags} 
+            onDeselect={deselectTag} 
+            onClearAll={clearTagSelection} 
+          />
+          
           <div className="flex items-center justify-between px-4 mb-2">
             <h2 className="text-sm font-semibold">My Feeds</h2>
             <Button variant="ghost" size="icon" onClick={() => setShowAddFeed(true)}>
@@ -207,7 +267,11 @@ export const AppSidebar = () => {
                       onClick={(e) => handleRefreshFeed(feed._id, e)}
                       disabled={loading}
                     >
-                      <RefreshCw className="h-3 w-3" />
+                      {loading && feed._id === selectedFeed?._id ? (
+                        <Spinner size="sm" />
+                      ) : (
+                        <RefreshCw className="h-3 w-3" />
+                      )}
                     </Button>
                     <NewContentNotification feed={feed} onFetch={handleRefreshFeed} />
                   </div>
@@ -233,7 +297,7 @@ export const AppSidebar = () => {
                     key={tag._id}
                     onClick={() => selectTag(tag)}
                     className={`flex items-center gap-2 w-full p-2 rounded-md text-left text-sm ${
-                      selectedTag?._id === tag._id
+                      selectedTags && selectedTags.some(t => t._id === tag._id)
                         ? 'bg-primary/10 text-primary font-medium'
                         : 'hover:bg-secondary'
                     }`}

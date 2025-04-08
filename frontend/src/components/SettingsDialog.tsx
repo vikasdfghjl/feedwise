@@ -14,6 +14,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Trash2, Rss, Tag, X, AlertCircle } from 'lucide-react';
 import { useFeed } from '@/hooks/useFeed';
 import { cn } from '@/lib/utils';
+import { Spinner } from '@/components/ui/spinner';
 
 interface SettingsDialogProps {
   open: boolean;
@@ -21,7 +22,7 @@ interface SettingsDialogProps {
 }
 
 export const SettingsDialog: React.FC<SettingsDialogProps> = ({ open, onOpenChange }) => {
-  const { feeds, tags, removeFeed, removeTag } = useFeed();
+  const { feeds, tags, removeFeed, removeTag, loading } = useFeed();
   const [filterText, setFilterText] = useState('');
   const [deletingFeedId, setDeletingFeedId] = useState<string | null>(null);
   const [deletingTagId, setDeletingTagId] = useState<string | null>(null);
@@ -152,8 +153,13 @@ export const SettingsDialog: React.FC<SettingsDialogProps> = ({ open, onOpenChan
                               size="sm" 
                               onClick={() => handleRemoveFeed(feed._id)}
                               className="h-7 px-2 text-destructive-foreground bg-destructive border-destructive-foreground/20 hover:bg-destructive/80"
+                              disabled={loading && deletingFeedId === feed._id}
                             >
-                              Delete
+                              {loading && deletingFeedId === feed._id ? (
+                                <Spinner size="sm" color="currentColor" />
+                              ) : (
+                                'Delete'
+                              )}
                             </Button>
                           </div>
                         </div>
@@ -218,8 +224,13 @@ export const SettingsDialog: React.FC<SettingsDialogProps> = ({ open, onOpenChan
                               size="sm" 
                               onClick={() => handleRemoveTag(tag._id)}
                               className="h-7 px-2 text-destructive-foreground bg-destructive border-destructive-foreground/20 hover:bg-destructive/80"
+                              disabled={loading && deletingTagId === tag._id}
                             >
-                              Delete
+                              {loading && deletingTagId === tag._id ? (
+                                <Spinner size="sm" color="currentColor" />
+                              ) : (
+                                'Delete'
+                              )}
                             </Button>
                           </div>
                         </div>

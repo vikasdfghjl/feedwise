@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { registerUser } from '@/services/api';
+import { Spinner } from '@/components/ui/spinner';
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -125,7 +126,14 @@ const Signup = () => {
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Creating account...' : 'Create Account'}
+              {loading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <Spinner size="sm" color="currentColor" />
+                  <span>Creating account...</span>
+                </div>
+              ) : (
+                'Create Account'
+              )}
             </Button>
             <div className="text-center text-sm">
               Already have an account?{' '}

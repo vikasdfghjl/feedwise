@@ -29,6 +29,7 @@ export interface Article {
   isRead: boolean;
   isSaved: boolean;
   relevanceScore: number;
+  matchedTagCount?: number; // Adding this property to track tag matches
   userId: string;
   createdAt?: string | Date;
   updatedAt?: string | Date;

@@ -97,7 +97,7 @@ export const getArticles = (params?: {
   page?: number, 
   limit?: number, 
   feedId?: string, 
-  tag?: string, 
+  tags?: string[], // Changed from tag to tags array
   isRead?: boolean, 
   isSaved?: boolean,
   source?: string
@@ -107,7 +107,7 @@ export const getSavedArticles = (params?: {
   page?: number, 
   limit?: number, 
   feedId?: string, 
-  tag?: string, 
+  tags?: string[], // Changed from tag to tags array
   isRead?: boolean
 }) => api.get('/articles/saved', { params });
 

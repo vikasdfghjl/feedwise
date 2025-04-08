@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { X, Plus } from 'lucide-react';
 import { useFeed } from '@/hooks/useFeed';
+import { Spinner } from '@/components/ui/spinner';
 
 interface TagInputProps {
   availableTags?: string[];
@@ -19,7 +20,7 @@ export const TagInput: React.FC<TagInputProps> = ({
   inForm = false,
   showTags = true // Default to showing tags
 }) => {
-  const { tags, addTag, removeTag } = useFeed();
+  const { tags, addTag, removeTag, loading } = useFeed();
   const [newTag, setNewTag] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -103,10 +104,16 @@ export const TagInput: React.FC<TagInputProps> = ({
           <Button 
             type="button" 
             onClick={(e) => handleAddTag(e)} 
-            disabled={!newTag.trim()}
+            disabled={loading || !newTag.trim()}
           >
-            <Plus className="h-4 w-4 mr-2" />
-            Add
+            {loading ? (
+              <Spinner size="sm" color="currentColor" />
+            ) : (
+              <>
+                <Plus className="h-4 w-4 mr-2" />
+                Add
+              </>
+            )}
           </Button>
         </div>
       ) : (
@@ -123,10 +130,16 @@ export const TagInput: React.FC<TagInputProps> = ({
           />
           <Button 
             type="submit" 
-            disabled={!newTag.trim()}
+            disabled={loading || !newTag.trim()}
           >
-            <Plus className="h-4 w-4 mr-2" />
-            Add
+            {loading ? (
+              <Spinner size="sm" color="currentColor" />
+            ) : (
+              <>
+                <Plus className="h-4 w-4 mr-2" />
+                Add
+              </>
+            )}
           </Button>
         </form>
       )}

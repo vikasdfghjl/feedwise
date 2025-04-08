@@ -22,6 +22,7 @@ import { Rss, Plus } from 'lucide-react';
 import { TagInput } from './TagInput';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Spinner } from '@/components/ui/spinner';
 
 interface AddFeedDialogProps {
   open: boolean;
@@ -204,7 +205,14 @@ export const AddFeedDialog: React.FC<AddFeedDialogProps> = ({ open, onOpenChange
                   Cancel
                 </Button>
                 <Button type="submit" disabled={loading}>
-                  {loading ? 'Adding...' : 'Add Feed'}
+                  {loading ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <Spinner size="sm" color="currentColor" />
+                      <span>Adding...</span>
+                    </div>
+                  ) : (
+                    'Add Feed'
+                  )}
                 </Button>
               </DialogFooter>
             </form>

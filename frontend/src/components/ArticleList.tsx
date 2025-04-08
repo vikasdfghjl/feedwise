@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { TimeFilterOption } from '@/context/FeedContext';
 import { Calendar } from 'lucide-react';
 import { ViewType } from '@/pages/Dashboard';
+import { Spinner } from '@/components/ui/spinner'; // Import the Spinner component
 
 interface ArticleListProps {
   viewType: ViewType;
@@ -14,11 +15,12 @@ export const ArticleList: React.FC<ArticleListProps> = ({ viewType }) => {
   const { 
     filteredArticles, 
     selectedFeed, 
-    selectedTag, 
+    selectedTags, 
     searchQuery,
     timeFilter,
     setTimeFilter,
-    isSavedView
+    isSavedView,
+    loading
   } = useFeed();
 
   const getTitle = () => {
@@ -31,8 +33,10 @@ export const ArticleList: React.FC<ArticleListProps> = ({ viewType }) => {
     if (selectedFeed) {
       return selectedFeed.title;
     }
-    if (selectedTag) {
-      return `#${selectedTag.name}`;
+    if (selectedTags && selectedTags.length > 0) {
+      return selectedTags.length === 1 
+        ? `#${selectedTags[0].name}` 
+        : `${selectedTags.length} tags selected`;
     }
     return 'All Articles';
   };
@@ -54,8 +58,8 @@ export const ArticleList: React.FC<ArticleListProps> = ({ viewType }) => {
               ? "Try adjusting your search query"
               : selectedFeed
               ? "This feed doesn't have any articles yet"
-              : selectedTag
-              ? "No articles with this tag"
+              : selectedTags && selectedTags.length > 0
+              ? "No articles with these tags"
               : timeFilter !== 'all'
               ? `No articles in the selected time period`
               : "Start by adding some RSS feeds"}
@@ -167,7 +171,13 @@ export const ArticleList: React.FC<ArticleListProps> = ({ viewType }) => {
         </div>
       </div>
 
-      {renderArticles()}
+      {loading ? (
+        <div className="flex justify-center items-center h-[400px]">
+          <Spinner size="lg" />
+        </div>
+      ) : (
+        renderArticles()
+      )}
     </div>
   );
 };
