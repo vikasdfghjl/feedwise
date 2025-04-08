@@ -126,4 +126,8 @@ export const toggleSavedArticle = (id: string) =>
 export const updateArticleTags = (id: string, tags: string[]) => 
   api.put(`/articles/${id}/tags`, { tags });
 
+// Add new API function for AI tag scanning
+export const scanArticlesForTag = (tagName: string) => 
+  api.post('/tags/scan-articles', { tagName });
+
 export default api;

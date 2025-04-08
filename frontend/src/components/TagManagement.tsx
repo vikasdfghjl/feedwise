@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Dialog,
@@ -30,7 +29,7 @@ export const TagManagement: React.FC<TagManagementProps> = ({ open, onOpenChange
         </DialogHeader>
         
         <div className="py-4">
-          <TagInput />
+          <TagInput showTags={false} />
         </div>
       </DialogContent>
     </Dialog>

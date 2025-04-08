@@ -355,6 +355,15 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setSelectedFeed(null); // Clear feed selection when selecting a tag
     // Clear the saved view flag when selecting a tag
     setIsSavedView(false);
+    
+    if (tag) {
+      // Set a custom loading toast when selecting a tag
+      toast({
+        title: `Loading articles tagged with "${tag.name}"`,
+        description: "Finding relevant content..."
+      });
+    }
+    
     // Set shouldFetchArticles to true to force a fresh fetch from the API
     setShouldFetchArticles(true);
   };
@@ -461,12 +470,62 @@ export const FeedProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Add new tag to state
       setTags(prev => [...prev, response.data]);
       
-      setLoading(false);
-      
+      // Show first loading toast - creating tag
       toast({
         title: "Tag added",
         description: `Tag "${name}" has been created`,
       });
+      
+      // Show scanning toast - tell user we're analyzing articles
+      toast({
+        title: "Scanning articles",
+        description: `Analyzing articles for "${name}" content...`,
+      });
+      
+      // Now scan articles for relevance to this tag
+      try {
+        const scanResponse = await api.scanArticlesForTag(name);
+        
+        // If articles were tagged, update articles in state with new tag assignments
+        if (scanResponse.data.taggedArticles && scanResponse.data.taggedArticles.length > 0) {
+          // Update articles in state that now have this tag
+          setArticles(prev => 
+            prev.map(article => {
+              // Check if this article was tagged during scanning
+              if (scanResponse.data.taggedArticles.includes(article._id)) {
+                // Add the tag to this article if it doesn't already have it
+                const updatedTags = article.tags || [];
+                if (!updatedTags.includes(name.toLowerCase())) {
+                  updatedTags.push(name.toLowerCase());
+                }
+                return { ...article, tags: updatedTags };
+              }
+              return article;
+            })
+          );
+          
+          // Show success toast with count of tagged articles
+          toast({
+            title: "Articles tagged",
+            description: `Found ${scanResponse.data.taggedArticles.length} articles related to "${name}"`,
+          });
+        } else {
+          // No articles found with matching content
+          toast({
+            title: "No matches found",
+            description: `No articles found containing "${name}" content`,
+          });
+        }
+      } catch (scanErr) {
+        console.error('Error scanning articles for tag:', scanErr);
+        toast({
+          title: "Error analyzing articles",
+          description: "Failed to scan articles for tag relevance",
+          variant: "destructive",
+        });
+      }
+      
+      setLoading(false);
     } catch (err: unknown) {
       const error = err as ApiError;
       setLoading(false);

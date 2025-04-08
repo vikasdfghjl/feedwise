@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { X, Plus } from 'lucide-react';
@@ -8,35 +8,41 @@ interface TagInputProps {
   availableTags?: string[];
   selectedTags?: string[];
   onChange?: (tags: string[]) => void;
-  inForm?: boolean; // New prop to indicate if component is used inside a form
+  inForm?: boolean; // Prop to indicate if component is used inside a form
+  showTags?: boolean; // New prop to control tag list display
 }
 
 export const TagInput: React.FC<TagInputProps> = ({ 
   availableTags, 
   selectedTags = [], 
   onChange,
-  inForm = false
+  inForm = false,
+  showTags = true // Default to showing tags
 }) => {
   const { tags, addTag, removeTag } = useFeed();
   const [newTag, setNewTag] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleAddTag = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
+  const handleAddTag = (e?: React.FormEvent | React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
     
-    if (newTag.trim()) {
-      // If used in dialog with onChange prop
+    const trimmedTag = newTag.trim();
+    
+    if (trimmedTag) {
+      // If used with onChange prop (form/dialog mode)
       if (onChange) {
-        const tagExists = selectedTags.includes(newTag.trim());
+        const tagExists = selectedTags.includes(trimmedTag);
         if (!tagExists) {
-          onChange([...selectedTags, newTag.trim()]);
-          setNewTag('');
+          onChange([...selectedTags, trimmedTag]);
         }
       } 
       // If used standalone with useFeed hook
       else {
         // Check if tag already exists
         const tagExists = tags.some(
-          (tag) => tag.name.toLowerCase() === newTag.trim().toLowerCase()
+          (tag) => tag.name.toLowerCase() === trimmedTag.toLowerCase()
         );
         
         if (!tagExists) {
@@ -47,10 +53,12 @@ export const TagInput: React.FC<TagInputProps> = ({
           ];
           const randomColor = colors[Math.floor(Math.random() * colors.length)];
           
-          addTag(newTag.trim(), randomColor);
-          setNewTag('');
+          addTag(trimmedTag, randomColor);
         }
       }
+      
+      // Clear input after adding
+      setNewTag('');
     }
   };
 
@@ -70,67 +78,84 @@ export const TagInput: React.FC<TagInputProps> = ({
     selectedTags.map(name => ({ _id: name, name, color: '#3b82f6' })) : 
     tags;
 
-  // Use a conditional to render either a form or a div based on the inForm prop
-  const InputContainer = inForm ? 
-    // When inside a form, use a div instead
-    ({ children }: { children: React.ReactNode }) => (
-      <div className="flex gap-2">{children}</div>
-    ) : 
-    // When not inside another form, use a form element
-    ({ children }: { children: React.ReactNode }) => (
-      <form onSubmit={handleAddTag} className="flex gap-2">{children}</form>
-    );
+  // Handle key press events - add tag on Enter
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Prevent form submission
+      handleAddTag();
+    }
+  };
 
   return (
     <div className="space-y-4">
-      <InputContainer>
-        <Input
-          value={newTag}
-          onChange={(e) => setNewTag(e.target.value)}
-          placeholder="Add a new tag..."
-          className="flex-1"
-        />
-        {inForm ? (
-          // When inside a form, use a button with type="button" to avoid form submission
+      {inForm ? (
+        <div className="flex gap-2">
+          <Input
+            ref={inputRef}
+            value={newTag}
+            onChange={(e) => setNewTag(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Add a new tag..."
+            className="flex-1"
+            type="text"
+            autoComplete="off"
+          />
           <Button 
             type="button" 
-            onClick={() => handleAddTag()} 
+            onClick={(e) => handleAddTag(e)} 
             disabled={!newTag.trim()}
           >
             <Plus className="h-4 w-4 mr-2" />
             Add
           </Button>
-        ) : (
-          // When not inside a form, use a submit button
-          <Button type="submit" disabled={!newTag.trim()}>
+        </div>
+      ) : (
+        <form onSubmit={(e) => handleAddTag(e)} className="flex gap-2">
+          <Input
+            ref={inputRef}
+            value={newTag}
+            onChange={(e) => setNewTag(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Add a new tag..."
+            className="flex-1"
+            type="text"
+            autoComplete="off"
+          />
+          <Button 
+            type="submit" 
+            disabled={!newTag.trim()}
+          >
             <Plus className="h-4 w-4 mr-2" />
             Add
           </Button>
-        )}
-      </InputContainer>
+        </form>
+      )}
       
-      <div className="flex flex-wrap gap-2">
-        {displayTags.map((tag) => (
-          <div
-            key={typeof tag === 'string' ? tag : tag._id}
-            className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm"
-            style={{ 
-              backgroundColor: `${typeof tag === 'string' ? '#3b82f6' : tag.color}20`, 
-              color: typeof tag === 'string' ? '#3b82f6' : tag.color 
-            }}
-          >
-            #{typeof tag === 'string' ? tag : tag.name}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-5 w-5 rounded-full hover:bg-transparent hover:text-destructive"
-              onClick={() => handleRemoveTag(typeof tag === 'string' ? tag : tag.name)}
+      {/* Only render the tags list if showTags prop is true */}
+      {showTags && (
+        <div className="flex flex-wrap gap-2">
+          {displayTags.map((tag) => (
+            <div
+              key={typeof tag === 'string' ? tag : tag._id}
+              className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm"
+              style={{ 
+                backgroundColor: `${typeof tag === 'string' ? '#3b82f6' : tag.color}20`, 
+                color: typeof tag === 'string' ? '#3b82f6' : tag.color 
+              }}
             >
-              <X className="h-3 w-3" />
-            </Button>
-          </div>
-        ))}
-      </div>
+              #{typeof tag === 'string' ? tag : tag.name}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-5 w-5 rounded-full hover:bg-transparent hover:text-destructive"
+                onClick={() => handleRemoveTag(typeof tag === 'string' ? tag : tag.name)}
+              >
+                <X className="h-3 w-3" />
+              </Button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
