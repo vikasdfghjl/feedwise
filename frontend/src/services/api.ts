@@ -126,6 +126,10 @@ export const toggleSavedArticle = (id: string) =>
 export const updateArticleTags = (id: string, tags: string[]) => 
   api.put(`/articles/${id}/tags`, { tags });
 
+// Add new API function for article summarization
+export const getArticleSummary = (id: string) => 
+  api.get(`/articles/${id}/summary`);
+
 // Add new API function for AI tag scanning
 export const scanArticlesForTag = (tagName: string) => 
   api.post('/tags/scan-articles', { tagName });

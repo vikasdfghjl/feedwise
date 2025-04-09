@@ -13270,3 +13270,370 @@
 2025-04-08 19:14:29 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
 2025-04-08 19:14:29 debug: Retrieved 50 articles out of 105 total
 2025-04-08 19:14:29 http: GET /?limit=50&page=1 304 - 50ms
+2025-04-08 19:15:14 info: Server running in development mode on port 5000
+2025-04-08 19:15:14 info: MongoDB Connected: localhost
+2025-04-08 19:15:14 http: GET /api/users/profile - Request received
+2025-04-08 19:15:14 http: GET /profile 304 - 19ms
+2025-04-08 19:15:14 http: GET /api/categories - Request received
+2025-04-08 19:15:14 http: GET / 304 - 4ms
+2025-04-08 19:15:14 http: GET /api/tags - Request received
+2025-04-08 19:15:14 http: GET / 304 - 11ms
+2025-04-08 19:15:14 http: GET /api/feeds - Request received
+2025-04-08 19:15:14 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 19:15:14 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:15:14 http: GET / 304 - 17ms
+2025-04-08 19:15:14 debug: Retrieved 50 articles out of 105 total
+2025-04-08 19:15:14 http: GET /?limit=50&page=1 304 - 45ms
+2025-04-08 19:15:14 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 19:15:14 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:15:14 debug: Retrieved 50 articles out of 105 total
+2025-04-08 19:15:14 http: GET /?limit=50&page=1 304 - 28ms
+2025-04-08 19:21:40 http: GET /api/users/profile - Request received
+2025-04-08 19:21:40 http: GET /api/categories - Request received
+2025-04-08 19:21:40 http: GET /api/tags - Request received
+2025-04-08 19:21:40 http: GET /api/feeds - Request received
+2025-04-08 19:21:40 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 19:21:40 http: GET / 304 - 50ms
+2025-04-08 19:21:40 http: GET /profile 304 - 85ms
+2025-04-08 19:21:40 http: GET / 304 - 77ms
+2025-04-08 19:21:40 http: GET / 304 - 88ms
+2025-04-08 19:21:40 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:21:40 debug: Retrieved 50 articles out of 105 total
+2025-04-08 19:21:40 http: GET /?limit=50&page=1 304 - 219ms
+2025-04-08 19:21:40 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 19:21:40 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:21:40 debug: Retrieved 50 articles out of 105 total
+2025-04-08 19:21:40 http: GET /?limit=50&page=1 304 - 82ms
+2025-04-08 19:21:55 http: POST /api/feeds - Request received
+2025-04-08 19:21:56 http: POST / 201 - 1287ms
+2025-04-08 19:21:56 http: GET /api/articles?limit=50&page=1&feedId=67f529fc20799d5228ed8abf - Request received
+2025-04-08 19:21:56 debug: Fetching articles with filters: feedId=67f529fc20799d5228ed8abf, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:21:56 debug: Retrieved 25 articles out of 25 total
+2025-04-08 19:21:56 http: GET /?limit=50&page=1&feedId=67f529fc20799d5228ed8abf 200 - 38ms
+2025-04-08 19:21:56 http: GET /api/feeds/67f529fc20799d5228ed8abf/check-new-content - Request received
+2025-04-08 19:21:56 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 19:21:56 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:21:56 debug: Retrieved 50 articles out of 130 total
+2025-04-08 19:21:56 http: GET /?limit=50&page=1 200 - 41ms
+2025-04-08 19:21:56 http: GET /api/articles?limit=50&page=1&feedId=67f529fc20799d5228ed8abf - Request received
+2025-04-08 19:21:56 debug: Fetching articles with filters: feedId=67f529fc20799d5228ed8abf, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:21:56 debug: Retrieved 25 articles out of 25 total
+2025-04-08 19:21:56 http: GET /?limit=50&page=1&feedId=67f529fc20799d5228ed8abf 304 - 16ms
+2025-04-08 19:21:57 http: GET /67f529fc20799d5228ed8abf/check-new-content 200 - 358ms
+2025-04-08 19:21:58 http: GET /api/articles?limit=50&page=1&feedId=67f3fe3178a772a408250673 - Request received
+2025-04-08 19:21:58 debug: Fetching articles with filters: feedId=67f3fe3178a772a408250673, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:21:58 debug: Retrieved 50 articles out of 50 total
+2025-04-08 19:21:58 http: GET /?limit=50&page=1&feedId=67f3fe3178a772a408250673 304 - 19ms
+2025-04-08 19:21:59 http: GET /api/articles?limit=50&page=1&feedId=67f529fc20799d5228ed8abf - Request received
+2025-04-08 19:21:59 debug: Fetching articles with filters: feedId=67f529fc20799d5228ed8abf, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:21:59 debug: Retrieved 25 articles out of 25 total
+2025-04-08 19:21:59 http: GET /?limit=50&page=1&feedId=67f529fc20799d5228ed8abf 304 - 18ms
+2025-04-08 19:22:01 http: GET /api/articles?limit=50&page=1&feedId=67f3cee5df9b8944e6c75810 - Request received
+2025-04-08 19:22:01 debug: Fetching articles with filters: feedId=67f3cee5df9b8944e6c75810, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:22:01 debug: Retrieved 36 articles out of 36 total
+2025-04-08 19:22:01 http: GET /?limit=50&page=1&feedId=67f3cee5df9b8944e6c75810 304 - 29ms
+2025-04-08 19:22:05 http: GET /api/articles?limit=50&page=1&feedId=67f3fdf878a772a4082505ef - Request received
+2025-04-08 19:22:05 debug: Fetching articles with filters: feedId=67f3fdf878a772a4082505ef, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:22:05 debug: Retrieved 19 articles out of 19 total
+2025-04-08 19:22:05 http: GET /?limit=50&page=1&feedId=67f3fdf878a772a4082505ef 304 - 13ms
+2025-04-08 19:22:05 http: GET /api/articles?limit=50&page=1&feedId=67f3fe3178a772a408250673 - Request received
+2025-04-08 19:22:05 debug: Fetching articles with filters: feedId=67f3fe3178a772a408250673, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:22:06 debug: Retrieved 50 articles out of 50 total
+2025-04-08 19:22:06 http: GET /?limit=50&page=1&feedId=67f3fe3178a772a408250673 304 - 32ms
+2025-04-08 19:22:08 http: GET /api/articles?limit=50&page=1&feedId=67f3cee5df9b8944e6c75810 - Request received
+2025-04-08 19:22:08 debug: Fetching articles with filters: feedId=67f3cee5df9b8944e6c75810, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:22:08 debug: Retrieved 36 articles out of 36 total
+2025-04-08 19:22:08 http: GET /?limit=50&page=1&feedId=67f3cee5df9b8944e6c75810 304 - 23ms
+2025-04-08 19:22:09 http: GET /api/articles?limit=50&page=1&feedId=67f3fdf878a772a4082505ef - Request received
+2025-04-08 19:22:09 debug: Fetching articles with filters: feedId=67f3fdf878a772a4082505ef, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:22:09 debug: Retrieved 19 articles out of 19 total
+2025-04-08 19:22:09 http: GET /?limit=50&page=1&feedId=67f3fdf878a772a4082505ef 304 - 14ms
+2025-04-08 19:22:09 http: GET /api/articles?limit=50&page=1&feedId=67f3fe3178a772a408250673 - Request received
+2025-04-08 19:22:09 debug: Fetching articles with filters: feedId=67f3fe3178a772a408250673, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:22:10 debug: Retrieved 50 articles out of 50 total
+2025-04-08 19:22:10 http: GET /?limit=50&page=1&feedId=67f3fe3178a772a408250673 304 - 21ms
+2025-04-08 19:22:10 http: GET /api/articles?limit=50&page=1&feedId=67f529fc20799d5228ed8abf - Request received
+2025-04-08 19:22:10 debug: Fetching articles with filters: feedId=67f529fc20799d5228ed8abf, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:22:10 debug: Retrieved 25 articles out of 25 total
+2025-04-08 19:22:10 http: GET /?limit=50&page=1&feedId=67f529fc20799d5228ed8abf 304 - 17ms
+2025-04-08 19:22:11 http: GET /api/articles?limit=50&page=1&feedId=67f3fe3178a772a408250673 - Request received
+2025-04-08 19:22:11 debug: Fetching articles with filters: feedId=67f3fe3178a772a408250673, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:22:11 debug: Retrieved 50 articles out of 50 total
+2025-04-08 19:22:11 http: GET /?limit=50&page=1&feedId=67f3fe3178a772a408250673 304 - 24ms
+2025-04-08 19:22:11 http: GET /api/articles?limit=50&page=1&feedId=67f3fdf878a772a4082505ef - Request received
+2025-04-08 19:22:11 debug: Fetching articles with filters: feedId=67f3fdf878a772a4082505ef, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:22:11 debug: Retrieved 19 articles out of 19 total
+2025-04-08 19:22:11 http: GET /?limit=50&page=1&feedId=67f3fdf878a772a4082505ef 304 - 18ms
+2025-04-08 19:22:12 http: GET /api/articles?limit=50&page=1&feedId=67f3cee5df9b8944e6c75810 - Request received
+2025-04-08 19:22:12 debug: Fetching articles with filters: feedId=67f3cee5df9b8944e6c75810, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:22:12 debug: Retrieved 36 articles out of 36 total
+2025-04-08 19:22:12 http: GET /?limit=50&page=1&feedId=67f3cee5df9b8944e6c75810 304 - 24ms
+2025-04-08 19:29:39 info: Server running in development mode on port 5000
+2025-04-08 19:29:39 info: MongoDB Connected: localhost
+2025-04-08 19:39:07 info: Server running in development mode on port 5000
+2025-04-08 19:39:07 info: MongoDB Connected: localhost
+2025-04-08 19:39:31 info: Server running in development mode on port 5000
+2025-04-08 19:39:31 info: MongoDB Connected: localhost
+2025-04-08 19:39:48 http: POST /api/users/login - Request received
+2025-04-08 19:39:48 http: POST /login 200 - 260ms
+2025-04-08 19:39:49 http: GET /api/users/profile - Request received
+2025-04-08 19:39:49 http: GET /profile 304 - 9ms
+2025-04-08 19:39:49 http: GET /api/users/profile - Request received
+2025-04-08 19:39:49 http: GET /profile 304 - 8ms
+2025-04-08 19:39:49 http: GET /api/categories - Request received
+2025-04-08 19:39:49 http: GET /api/tags - Request received
+2025-04-08 19:39:49 http: GET /api/feeds - Request received
+2025-04-08 19:39:49 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 19:39:49 http: GET / 304 - 17ms
+2025-04-08 19:39:49 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:39:49 http: GET / 304 - 29ms
+2025-04-08 19:39:49 http: GET / 200 - 30ms
+2025-04-08 19:39:49 debug: Retrieved 50 articles out of 130 total
+2025-04-08 19:39:49 http: GET /?limit=50&page=1 304 - 77ms
+2025-04-08 19:39:49 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 19:39:49 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:39:49 debug: Retrieved 50 articles out of 130 total
+2025-04-08 19:39:49 http: GET /?limit=50&page=1 304 - 22ms
+2025-04-08 19:39:54 http: GET /api/articles/67f40141b591aa4f127d5577/summary - Request received
+2025-04-08 19:39:54 debug: Generating/retrieving summary for article 67f40141b591aa4f127d5577
+2025-04-08 19:39:54 debug: Generating new summary for article 67f40141b591aa4f127d5577 using OpenAI
+2025-04-08 19:39:54 debug: Generating summary for article: The see-through Beats Studio Buds Plus are on sale for less than $100
+2025-04-08 19:39:57 error: Error generating summary with OpenAI: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.
+2025-04-08 19:39:57 error: Error generating summary for article 67f40141b591aa4f127d5577: Failed to generate article summary with AI
+2025-04-08 19:39:57 error: [500] Failed to generate article summary with AI - /api/articles/67f40141b591aa4f127d5577/summary - GET - ::1
+2025-04-08 19:39:57 error: ApiError: Failed to generate article summary with AI
+    at C:\Users\shyvi\Projects\clg-project\feedwise\backend\src\controllers\articleController.ts:510:11
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-04-08 19:39:57 error: GET /api/articles/67f40141b591aa4f127d5577/summary 500 - 2977ms
+2025-04-08 19:41:13 info: Server running in development mode on port 5000
+2025-04-08 19:41:13 info: MongoDB Connected: localhost
+2025-04-08 19:44:49 info: Server running in development mode on port 5000
+2025-04-08 19:44:49 info: MongoDB Connected: localhost
+2025-04-08 19:46:10 info: Server running in development mode on port 5000
+2025-04-08 19:46:10 info: MongoDB Connected: localhost
+2025-04-08 19:46:15 http: POST /api/users/login - Request received
+2025-04-08 19:46:16 http: POST /login 200 - 282ms
+2025-04-08 19:46:16 http: GET /api/users/profile - Request received
+2025-04-08 19:46:16 http: GET /profile 304 - 26ms
+2025-04-08 19:46:16 http: GET /api/users/profile - Request received
+2025-04-08 19:46:16 http: GET /profile 304 - 12ms
+2025-04-08 19:46:16 http: GET /api/categories - Request received
+2025-04-08 19:46:16 http: GET /api/tags - Request received
+2025-04-08 19:46:16 http: GET /api/feeds - Request received
+2025-04-08 19:46:16 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 19:46:16 http: GET / 304 - 22ms
+2025-04-08 19:46:16 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:46:16 http: GET / 304 - 35ms
+2025-04-08 19:46:16 http: GET / 304 - 37ms
+2025-04-08 19:46:16 debug: Retrieved 50 articles out of 130 total
+2025-04-08 19:46:16 http: GET /?limit=50&page=1 304 - 63ms
+2025-04-08 19:46:16 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-08 19:46:16 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:46:16 debug: Retrieved 50 articles out of 130 total
+2025-04-08 19:46:16 http: GET /?limit=50&page=1 304 - 33ms
+2025-04-08 19:46:22 http: GET /api/articles/67f40141b591aa4f127d5580/summary - Request received
+2025-04-08 19:46:22 debug: Generating/retrieving summary for article 67f40141b591aa4f127d5580
+2025-04-08 19:46:22 debug: Generating new summary for article 67f40141b591aa4f127d5580
+2025-04-08 19:46:22 debug: Generating summary for article: Google&#8217;s AI Mode can now see and search with images
+2025-04-08 19:46:22 debug: Successfully generated summary for article: Google&#8217;s AI Mode can now see and search with images
+2025-04-08 19:46:22 http: GET /67f40141b591aa4f127d5580/summary 200 - 36ms
+2025-04-08 19:46:28 http: GET /api/articles/67f529fc20799d5228ed8ac8/summary - Request received
+2025-04-08 19:46:28 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ac8
+2025-04-08 19:46:28 debug: Generating new summary for article 67f529fc20799d5228ed8ac8
+2025-04-08 19:46:28 debug: Generating summary for article: Play South of Midnight Now, GTA5 and More Soon, on Xbox Game Pass
+2025-04-08 19:46:28 debug: Successfully generated summary for article: Play South of Midnight Now, GTA5 and More Soon, on Xbox Game Pass
+2025-04-08 19:46:28 http: GET /67f529fc20799d5228ed8ac8/summary 200 - 17ms
+2025-04-08 19:46:31 http: GET /api/articles/67f529fc20799d5228ed8acd/summary - Request received
+2025-04-08 19:46:31 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8acd
+2025-04-08 19:46:31 debug: Generating new summary for article 67f529fc20799d5228ed8acd
+2025-04-08 19:46:31 debug: Generating summary for article: Lyme Disease: How to Prevent It, and What to Do if a Tick Bites You
+2025-04-08 19:46:31 debug: Successfully generated summary for article: Lyme Disease: How to Prevent It, and What to Do if a Tick Bites You
+2025-04-08 19:46:31 http: GET /67f529fc20799d5228ed8acd/summary 200 - 12ms
+2025-04-08 19:46:40 http: GET /api/articles/67f529fc20799d5228ed8ad1/summary - Request received
+2025-04-08 19:46:40 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ad1
+2025-04-08 19:46:40 debug: Generating new summary for article 67f529fc20799d5228ed8ad1
+2025-04-08 19:46:40 debug: Generating summary for article: Reolink Duo 3 Security Camera Review: Dual 4K Cams Are Outstanding but Overwhelming
+2025-04-08 19:46:40 debug: Successfully generated summary for article: Reolink Duo 3 Security Camera Review: Dual 4K Cams Are Outstanding but Overwhelming
+2025-04-08 19:46:40 http: GET /67f529fc20799d5228ed8ad1/summary 200 - 13ms
+2025-04-08 19:46:46 http: GET /api/articles?limit=50&page=1&feedId=67f529fc20799d5228ed8abf - Request received
+2025-04-08 19:46:46 debug: Fetching articles with filters: feedId=67f529fc20799d5228ed8abf, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-08 19:46:46 debug: Retrieved 25 articles out of 25 total
+2025-04-08 19:46:46 http: GET /?limit=50&page=1&feedId=67f529fc20799d5228ed8abf 304 - 19ms
+2025-04-08 19:46:47 http: GET /api/articles/67f529fc20799d5228ed8ac1/summary - Request received
+2025-04-08 19:46:47 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ac1
+2025-04-08 19:46:47 debug: Generating new summary for article 67f529fc20799d5228ed8ac1
+2025-04-08 19:46:47 debug: Generating summary for article: Best Internet Providers in Boston, Massachusetts
+2025-04-08 19:46:47 debug: Successfully generated summary for article: Best Internet Providers in Boston, Massachusetts
+2025-04-08 19:46:47 http: GET /67f529fc20799d5228ed8ac1/summary 200 - 12ms
+2025-04-09 15:44:03 info: Server running in development mode on port 5000
+2025-04-09 15:44:03 info: MongoDB Connected: localhost
+2025-04-09 15:44:21 http: POST /api/users/login - Request received
+2025-04-09 15:44:22 http: POST /login 200 - 296ms
+2025-04-09 15:44:22 http: GET /api/users/profile - Request received
+2025-04-09 15:44:22 http: GET /profile 304 - 22ms
+2025-04-09 15:44:22 http: GET /api/users/profile - Request received
+2025-04-09 15:44:22 http: GET /api/categories - Request received
+2025-04-09 15:44:22 http: GET /api/tags - Request received
+2025-04-09 15:44:22 http: GET /api/feeds - Request received
+2025-04-09 15:44:22 http: GET /profile 304 - 56ms
+2025-04-09 15:44:22 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-09 15:44:22 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-09 15:44:22 http: GET / 304 - 63ms
+2025-04-09 15:44:22 http: GET / 304 - 285ms
+2025-04-09 15:44:22 http: GET / 304 - 297ms
+2025-04-09 15:44:22 http: GET /api/feeds/67f3cee5df9b8944e6c75810/check-new-content - Request received
+2025-04-09 15:44:22 http: GET /api/feeds/67f3fdf878a772a4082505ef/check-new-content - Request received
+2025-04-09 15:44:22 http: GET /api/feeds/67f3fe3178a772a408250673/check-new-content - Request received
+2025-04-09 15:44:22 http: GET /api/feeds/67f529fc20799d5228ed8abf/check-new-content - Request received
+2025-04-09 15:44:22 debug: Retrieved 50 articles out of 130 total
+2025-04-09 15:44:23 http: GET /?limit=50&page=1 304 - 569ms
+2025-04-09 15:44:23 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-09 15:44:23 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-09 15:44:23 debug: Retrieved 50 articles out of 130 total
+2025-04-09 15:44:23 http: GET /?limit=50&page=1 304 - 42ms
+2025-04-09 15:44:23 http: GET /67f3fe3178a772a408250673/check-new-content 304 - 433ms
+2025-04-09 15:44:23 http: GET /67f3cee5df9b8944e6c75810/check-new-content 200 - 738ms
+2025-04-09 15:44:24 http: GET /67f529fc20799d5228ed8abf/check-new-content 200 - 1355ms
+2025-04-09 15:44:27 http: GET /api/articles/67f529fc20799d5228ed8ac1/summary - Request received
+2025-04-09 15:44:27 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ac1
+2025-04-09 15:44:27 debug: Found existing summary for article 67f529fc20799d5228ed8ac1
+2025-04-09 15:44:27 http: GET /67f529fc20799d5228ed8ac1/summary 200 - 232ms
+2025-04-09 15:44:33 http: GET /67f3fdf878a772a4082505ef/check-new-content 200 - 10787ms
+2025-04-09 15:44:33 http: GET /api/articles/67f529fc20799d5228ed8ac2/summary - Request received
+2025-04-09 15:44:33 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ac2
+2025-04-09 15:44:33 debug: Generating new summary for article 67f529fc20799d5228ed8ac2
+2025-04-09 15:44:33 debug: Generating summary for article: Tackle Germs in Your Bathroom With This Spring Cleaning Guide
+2025-04-09 15:44:33 debug: Successfully generated summary for article: Tackle Germs in Your Bathroom With This Spring Cleaning Guide
+2025-04-09 15:44:33 http: GET /67f529fc20799d5228ed8ac2/summary 200 - 45ms
+2025-04-09 15:44:44 http: GET /api/articles/67f529fc20799d5228ed8ac3/summary - Request received
+2025-04-09 15:44:44 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ac3
+2025-04-09 15:44:44 debug: Generating new summary for article 67f529fc20799d5228ed8ac3
+2025-04-09 15:44:44 debug: Generating summary for article: What is an Open-Access Network? How It Might Boost Your Internet Provider Options
+2025-04-09 15:44:44 debug: Successfully generated summary for article: What is an Open-Access Network? How It Might Boost Your Internet Provider Options
+2025-04-09 15:44:44 http: GET /67f529fc20799d5228ed8ac3/summary 200 - 16ms
+2025-04-09 15:49:53 info: Server running in development mode on port 5000
+2025-04-09 15:49:53 info: MongoDB Connected: localhost
+2025-04-09 16:03:16 info: Server running in development mode on port 5000
+2025-04-09 16:03:16 info: MongoDB Connected: localhost
+2025-04-09 16:03:28 info: Server running in development mode on port 5000
+2025-04-09 16:03:28 info: MongoDB Connected: localhost
+2025-04-09 16:04:26 info: Server running in development mode on port 5000
+2025-04-09 16:04:26 info: MongoDB Connected: localhost
+2025-04-09 16:04:29 http: GET /api/users/profile - Request received
+2025-04-09 16:04:29 http: GET /api/categories - Request received
+2025-04-09 16:04:29 http: GET /api/tags - Request received
+2025-04-09 16:04:29 http: GET /api/feeds - Request received
+2025-04-09 16:04:29 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-09 16:04:29 http: GET / 304 - 68ms
+2025-04-09 16:04:29 http: GET /profile 304 - 120ms
+2025-04-09 16:04:29 http: GET / 304 - 88ms
+2025-04-09 16:04:29 http: GET / 304 - 119ms
+2025-04-09 16:04:29 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-09 16:04:29 debug: Retrieved 50 articles out of 130 total
+2025-04-09 16:04:29 http: GET /?limit=50&page=1 304 - 190ms
+2025-04-09 16:04:29 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-09 16:04:29 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-09 16:04:29 debug: Retrieved 50 articles out of 130 total
+2025-04-09 16:04:29 http: GET /?limit=50&page=1 304 - 35ms
+2025-04-09 16:04:32 http: GET /api/articles/67f529fc20799d5228ed8ac1/summary - Request received
+2025-04-09 16:04:32 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ac1
+2025-04-09 16:04:32 debug: Found existing summary for article 67f529fc20799d5228ed8ac1
+2025-04-09 16:04:32 http: GET /67f529fc20799d5228ed8ac1/summary 304 - 12ms
+2025-04-09 16:04:38 http: GET /api/articles/67f529fc20799d5228ed8ac2/summary - Request received
+2025-04-09 16:04:38 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ac2
+2025-04-09 16:04:38 debug: Found existing summary for article 67f529fc20799d5228ed8ac2
+2025-04-09 16:04:38 http: GET /67f529fc20799d5228ed8ac2/summary 200 - 9ms
+2025-04-09 16:04:44 http: GET /api/articles/67f529fc20799d5228ed8ac3/summary - Request received
+2025-04-09 16:04:44 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ac3
+2025-04-09 16:04:44 debug: Found existing summary for article 67f529fc20799d5228ed8ac3
+2025-04-09 16:04:44 http: GET /67f529fc20799d5228ed8ac3/summary 200 - 12ms
+2025-04-09 16:08:02 info: Server running in development mode on port 5000
+2025-04-09 16:08:02 info: MongoDB Connected: localhost
+2025-04-09 16:08:43 info: Server running in development mode on port 5000
+2025-04-09 16:08:43 info: MongoDB Connected: localhost
+2025-04-09 16:08:52 http: GET /api/users/profile - Request received
+2025-04-09 16:08:52 http: GET /api/categories - Request received
+2025-04-09 16:08:52 http: GET /api/tags - Request received
+2025-04-09 16:08:52 http: GET /api/feeds - Request received
+2025-04-09 16:08:52 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-09 16:08:52 http: GET / 304 - 66ms
+2025-04-09 16:08:52 http: GET /profile 304 - 110ms
+2025-04-09 16:08:52 http: GET / 304 - 83ms
+2025-04-09 16:08:52 http: GET / 304 - 86ms
+2025-04-09 16:08:52 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-09 16:08:52 debug: Retrieved 50 articles out of 130 total
+2025-04-09 16:08:52 http: GET /?limit=50&page=1 304 - 180ms
+2025-04-09 16:08:52 http: GET /api/articles?limit=50&page=1 - Request received
+2025-04-09 16:08:52 debug: Fetching articles with filters: feedId=null, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-09 16:08:52 debug: Retrieved 50 articles out of 130 total
+2025-04-09 16:08:52 http: GET /?limit=50&page=1 304 - 34ms
+2025-04-09 16:08:55 http: GET /api/articles/67f529fc20799d5228ed8ac1/summary - Request received
+2025-04-09 16:08:55 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ac1
+2025-04-09 16:08:55 debug: Found existing summary for article 67f529fc20799d5228ed8ac1
+2025-04-09 16:08:55 http: GET /67f529fc20799d5228ed8ac1/summary 304 - 10ms
+2025-04-09 16:09:01 http: GET /api/articles/67f529fc20799d5228ed8ac2/summary - Request received
+2025-04-09 16:09:01 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ac2
+2025-04-09 16:09:01 debug: Found existing summary for article 67f529fc20799d5228ed8ac2
+2025-04-09 16:09:01 http: GET /67f529fc20799d5228ed8ac2/summary 304 - 9ms
+2025-04-09 16:09:08 http: GET /api/articles/67f529fc20799d5228ed8ac4/summary - Request received
+2025-04-09 16:09:08 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ac4
+2025-04-09 16:09:08 debug: Generating new summary for article 67f529fc20799d5228ed8ac4
+2025-04-09 16:09:08 debug: Generating enhanced summary for article: The New Moto G Stylus Might Be the Fastest Charging Phone Under $400
+2025-04-09 16:09:08 debug: Successfully generated comprehensive summary for article: The New Moto G Stylus Might Be the Fastest Charging Phone Under $400
+2025-04-09 16:09:08 http: GET /67f529fc20799d5228ed8ac4/summary 200 - 25ms
+2025-04-09 16:09:19 http: GET /api/articles/67f529fc20799d5228ed8ac6/summary - Request received
+2025-04-09 16:09:19 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ac6
+2025-04-09 16:09:19 debug: Generating new summary for article 67f529fc20799d5228ed8ac6
+2025-04-09 16:09:19 debug: Generating enhanced summary for article: Best Internet Providers in Lebanon, Indiana
+2025-04-09 16:09:19 debug: Successfully generated comprehensive summary for article: Best Internet Providers in Lebanon, Indiana
+2025-04-09 16:09:19 http: GET /67f529fc20799d5228ed8ac6/summary 200 - 12ms
+2025-04-09 16:09:33 http: GET /api/articles/67f529fc20799d5228ed8ac8/summary - Request received
+2025-04-09 16:09:33 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ac8
+2025-04-09 16:09:33 debug: Found existing summary for article 67f529fc20799d5228ed8ac8
+2025-04-09 16:09:33 http: GET /67f529fc20799d5228ed8ac8/summary 200 - 8ms
+2025-04-09 16:09:39 http: GET /api/articles/67f529fc20799d5228ed8aca/summary - Request received
+2025-04-09 16:09:39 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8aca
+2025-04-09 16:09:39 debug: Generating new summary for article 67f529fc20799d5228ed8aca
+2025-04-09 16:09:39 debug: Generating enhanced summary for article: Need to Boost Your Wi-Fi Signal? Turn Your Old Wi-Fi Router Into an Access Point
+2025-04-09 16:09:39 debug: Successfully generated comprehensive summary for article: Need to Boost Your Wi-Fi Signal? Turn Your Old Wi-Fi Router Into an Access Point
+2025-04-09 16:09:39 http: GET /67f529fc20799d5228ed8aca/summary 200 - 10ms
+2025-04-09 16:09:55 http: GET /api/articles/67f529fc20799d5228ed8ad0/summary - Request received
+2025-04-09 16:09:55 debug: Generating/retrieving summary for article 67f529fc20799d5228ed8ad0
+2025-04-09 16:09:55 debug: Generating new summary for article 67f529fc20799d5228ed8ad0
+2025-04-09 16:09:55 debug: Generating enhanced summary for article: How to Professionally Monitor Your Home for Less Than $20
+2025-04-09 16:09:55 debug: Successfully generated comprehensive summary for article: How to Professionally Monitor Your Home for Less Than $20
+2025-04-09 16:09:55 http: GET /67f529fc20799d5228ed8ad0/summary 200 - 12ms
+2025-04-09 16:10:05 http: GET /api/articles/67f40141b591aa4f127d5580/summary - Request received
+2025-04-09 16:10:05 debug: Generating/retrieving summary for article 67f40141b591aa4f127d5580
+2025-04-09 16:10:05 debug: Found existing summary for article 67f40141b591aa4f127d5580
+2025-04-09 16:10:05 http: GET /67f40141b591aa4f127d5580/summary 200 - 9ms
+2025-04-09 16:10:13 http: GET /api/articles?limit=50&page=1&feedId=67f3fe3178a772a408250673 - Request received
+2025-04-09 16:10:13 debug: Fetching articles with filters: feedId=67f3fe3178a772a408250673, tags=null, isRead=null, isSaved=null, isFromSidebar=false
+2025-04-09 16:10:13 debug: Retrieved 50 articles out of 50 total
+2025-04-09 16:10:13 http: GET /?limit=50&page=1&feedId=67f3fe3178a772a408250673 304 - 30ms
+2025-04-09 16:10:16 http: GET /api/articles/67f3fe3178a772a408250676/summary - Request received
+2025-04-09 16:10:16 debug: Generating/retrieving summary for article 67f3fe3178a772a408250676
+2025-04-09 16:10:16 debug: Generating new summary for article 67f3fe3178a772a408250676
+2025-04-09 16:10:16 debug: Generating enhanced summary for article: 'Wi-Fi Keeps Going Down': Donald Trump's Return-to-Office Mandate Is Going Terribly
+2025-04-09 16:10:16 debug: Successfully generated comprehensive summary for article: 'Wi-Fi Keeps Going Down': Donald Trump's Return-to-Office Mandate Is Going Terribly
+2025-04-09 16:10:16 http: GET /67f3fe3178a772a408250676/summary 200 - 16ms
+2025-04-09 16:10:20 http: GET /api/articles/67f3fe3178a772a408250677/summary - Request received
+2025-04-09 16:10:20 debug: Generating/retrieving summary for article 67f3fe3178a772a408250677
+2025-04-09 16:10:20 debug: Generating new summary for article 67f3fe3178a772a408250677
+2025-04-09 16:10:20 debug: Generating enhanced summary for article: 14 Best Bookshelf Speakers (2025): Active, Passive, and Hi-Fi
+2025-04-09 16:10:20 debug: Successfully generated comprehensive summary for article: 14 Best Bookshelf Speakers (2025): Active, Passive, and Hi-Fi
+2025-04-09 16:10:20 http: GET /67f3fe3178a772a408250677/summary 200 - 9ms
+2025-04-09 16:10:30 http: GET /api/articles/67f3fe3178a772a408250679/summary - Request received
+2025-04-09 16:10:30 debug: Generating/retrieving summary for article 67f3fe3178a772a408250679
+2025-04-09 16:10:30 debug: Generating new summary for article 67f3fe3178a772a408250679
+2025-04-09 16:10:30 debug: Generating enhanced summary for article: Nintendo Is ‘Actively Assessing’ What a Trade War Means for the Switch 2
+2025-04-09 16:10:30 debug: Successfully generated comprehensive summary for article: Nintendo Is ‘Actively Assessing’ What a Trade War Means for the Switch 2
+2025-04-09 16:10:30 http: GET /67f3fe3178a772a408250679/summary 200 - 10ms
+2025-04-09 16:10:33 http: PUT /api/articles/67f3fe3178a772a408250679/read - Request received
+2025-04-09 16:10:33 debug: Marking article 67f3fe3178a772a408250679 as read
+2025-04-09 16:10:33 debug: Decreased unread count for feed 67f3fe3178a772a408250673 to 49
+2025-04-09 16:10:33 http: PUT /67f3fe3178a772a408250679/read 200 - 30ms
+2025-04-09 16:10:38 http: GET /api/articles/67f3fe3178a772a408250679/summary - Request received
+2025-04-09 16:10:38 debug: Generating/retrieving summary for article 67f3fe3178a772a408250679
+2025-04-09 16:10:38 debug: Found existing summary for article 67f3fe3178a772a408250679
+2025-04-09 16:10:38 http: GET /67f3fe3178a772a408250679/summary 200 - 7ms

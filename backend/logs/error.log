@@ -1,0 +1,7 @@
+2025-04-08 19:39:57 error: Error generating summary with OpenAI: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.
+2025-04-08 19:39:57 error: Error generating summary for article 67f40141b591aa4f127d5577: Failed to generate article summary with AI
+2025-04-08 19:39:57 error: [500] Failed to generate article summary with AI - /api/articles/67f40141b591aa4f127d5577/summary - GET - ::1
+2025-04-08 19:39:57 error: ApiError: Failed to generate article summary with AI
+    at C:\Users\shyvi\Projects\clg-project\feedwise\backend\src\controllers\articleController.ts:510:11
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-04-08 19:39:57 error: GET /api/articles/67f40141b591aa4f127d5577/summary 500 - 2977ms

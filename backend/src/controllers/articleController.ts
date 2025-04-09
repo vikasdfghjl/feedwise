@@ -5,6 +5,8 @@ import Feed from '../models/Feed';
 import mongoose from 'mongoose';
 import logger from '../utils/logger';
 import { asyncHandler, ApiError } from '../utils/errorUtils';
+import ArticleSummary, { IArticleSummary } from '../models/ArticleSummary';
+import { generateArticleSummary, OpenAIQuotaExceededError } from '../utils/summaryService';
 
 // Custom request type with user field
 interface AuthRequest extends Request {
@@ -451,4 +453,84 @@ export const getSavedArticles = asyncHandler(async (req: AuthRequest, res: Respo
     pages: Math.ceil(totalSaved / limit),
     total: totalSaved
   });
+});
+
+/**
+ * @desc    Generate or retrieve AI summary for an article
+ * @route   GET /api/articles/:id/summary
+ * @access  Private
+ */
+export const getArticleSummary = asyncHandler(async (req: AuthRequest, res: Response) => {
+  if (!req.user) {
+    throw new ApiError(401, 'Not authorized');
+  }
+
+  logger.debug(`Generating/retrieving summary for article ${req.params.id}`);
+  
+  // Check if article exists and belongs to user
+  const article = await Article.findOne({
+    _id: req.params.id,
+    userId: req.user._id,
+  });
+  
+  if (!article) {
+    logger.warn(`Article with ID ${req.params.id} not found for user ${req.user._id}`);
+    throw new ApiError(404, 'Article not found');
+  }
+  
+  // Check if summary already exists
+  const existingSummary = await ArticleSummary.findOne({
+    articleId: article._id,
+    userId: req.user._id
+  });
+  
+  if (existingSummary) {
+    logger.debug(`Found existing summary for article ${req.params.id}`);
+    res.json(existingSummary);
+    return;
+  }
+  
+  // If no existing summary, generate one using local model
+  logger.debug(`Generating new summary for article ${req.params.id}`);
+  
+  try {
+    // Generate summary using our local approach
+    const summary = await generateArticleSummary(article.title, article.description);
+    
+    // Save the summary
+    const newSummary = await ArticleSummary.create({
+      articleId: article._id,
+      userId: req.user._id,
+      summary
+    });
+    
+    res.json(newSummary);
+  } catch (error) {
+    // Check if this is a quota exceeded error
+    if (error instanceof OpenAIQuotaExceededError) {
+      logger.warn(`OpenAI quota exceeded when generating summary for article ${req.params.id}`);
+      
+      // Create a placeholder summary response with an informative message
+      const placeholderSummary = {
+        articleId: article._id,
+        userId: req.user._id,
+        summary: "AI summary generation is temporarily unavailable due to high demand. Please try again later.",
+        isPlaceholder: true,
+        _id: null,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      
+      // Return a 429 status code to indicate rate limiting
+      return res.status(429).json({
+        success: false,
+        data: placeholderSummary,
+        message: "API quota exceeded. Please try again later."
+      });
+    }
+    
+    // Handle other errors
+    logger.error(`Error generating summary for article ${req.params.id}:`, error);
+    throw new ApiError(500, 'Failed to generate article summary with AI');
+  }
 });
